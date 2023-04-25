@@ -8,6 +8,7 @@ class Player():
 #multiple variables that will be called, saved, and loaded
 inventory = []
 BedroomVar = 0
+FrontyardVar = 0
 
 class Menu(Player):
 #Class that will be called multiple times to allow player many commands
@@ -34,12 +35,16 @@ class Menu(Player):
 					print()
 				else:
 					print(f"\nInput was not recognized, returning to menu.")
-					print()
 
 class Car():
+#Class for the primary game objective (fixing and leaving through car)
 	def __init__(self):
 		print("Car!")
+
+###-----###-----###-----###-----###-----###-----###-----###-----###-----###----###
+
 def Bedroom():
+#starting location
 	global BedroomVar
 	ui = ""
 	if BedroomVar == 0:
@@ -47,7 +52,7 @@ def Bedroom():
 	else:
 		print(f"You re-enter the master bedroom; though there is not much of interest in here.")
 	while ui != "Menu":
-		ui = input(f"/// Inputs: 'South', 'East' ///\n").title()
+		ui = input(f"/// Inputs: 'East', 'West', 'South' ///\n").title()
 		if ui == "Menu":
 			Menu()
 			Bedroom()
@@ -57,9 +62,26 @@ def Bedroom():
 		elif ui == "East":
 			BedroomVar = 1
 			UpHall()
+		elif ui == "West":
+			BedroomVar = 1
+			Bathroom()
 		else:
 			print(f"\nInput not recognized; try again.\n")
 			Bedroom()
+
+def Bathroom():
+	ui = ""
+	print(f"You enter the master bedroom's bathroom. In it, cracked mirror and stained walls.")
+	while ui != "Menu":
+		ui == input(f"/// Inputs: 'East' ///\n").title()
+		if ui == "Menu":
+			Menu()
+			Bathroom()
+		elif ui == "East":
+			Bedroom()
+		else:
+			print(f"\nInput not recognized; try again.\n")
+			Bathroom()
 
 def KidsRoom():
 	ui = ""
@@ -115,9 +137,9 @@ def LivingRoom():
 
 def DiningRoom():
 	ui = ""
-	print(f"A low light lamp lights the family table. China and cutlery are chaotically littered on the floor.")
+	print(f"A low light lamp lights the family table. China and cutlery are littered on the floor.")
 	while ui != "Menu":
-		ui = input(f"/// Inputs: 'North', 'East' ///\n").title()
+		ui = input(f"/// Inputs: 'North', 'East', 'South' ///\n").title()
 		if ui == "Menu":
 			Menu()
 			DiningRoom()
@@ -129,9 +151,12 @@ def DiningRoom():
 				DownHall()
 		elif ui == "East":
 			LivingRoom()
+		elif ui == "South":
+			Frontyard()
 		else:
 			print(f"\nInput not recognized; try again.\n")
 			DiningRoom()
+
 def Kitchen():
 	ui = ""
 	print(f"Walking on the checkboard floor you see a disheveled, looted kitchen. Any trace of food is simply gone.")
@@ -147,6 +172,7 @@ def Kitchen():
 		else:
 			print(f"\nInput not recognized; try again.\n")
 			Kitchen()
+
 def DownHall():
 	ui = ""
 	print(f"You pass by frames of photos of bygone children; through the home's backdoor you see the moon-lit yard")
@@ -230,5 +256,60 @@ def Backyard():
 		else:
 			print(f"\nInput not recognized; try again.\n")
 			Backyard()
+
+def Frontyard():
+	global FrontyardVar
+	ui = ""
+	if FrontyardVar == 0:
+		print(f"As you open the front door, leaving the home, a faraway explosion is heard followed by more screams.\n\tYou should leave soon.")
+	else:
+		print(f"You walk by the gray picket fences in front of the house")
+	while ui != "Menu":
+		ui = input(f"/// Inputs: 'North', 'East', 'West' ///\n").title()
+		if ui == "Menu":
+			Menu()
+			Frontyard()
+		elif ui == "North":
+			FrontyardVar = 1
+			DiningRoom()
+		elif ui == "East":
+			FrontyardVar = 1
+			FrontyardEast()
+		elif ui == "West":
+			FrontyardVar = 1
+			FrontyardWest()
+		else:
+			print(f"\nInput not recognized; try again.\n")
+			Frontyard()
+
+def FrontyardEast():
+	ui = ""
+	print(f"You walk farther east from the house, any more distance would be dangerous.")
+	while ui != "Menu":
+		ui = input(f"/// Inputs: 'West' ///\n").title()
+		if ui == "Menu":
+			Menu()
+			FrontyardEast()
+		elif ui == "West":
+			Frontyard()
+		else:
+			print(f"\nInput not recognized; try again.\n")
+			FrontyardEast()
+
+def FrontyardWest():
+
+	ui = ""
+	print(f"You walk farther west from the house, any more distance would be dangerous.")
+	while ui != "Menu":
+		ui = input(f"/// Inputs: 'East' ///\n").title()
+		if ui == "Menu":
+			Menu()
+			FrontyardWest()
+		elif ui == "East":
+			Frontyard()
+		else:
+			print(f"\nInput not recpgnized; try again.\n")
+			FrontyardWest()
+
 Player()
 Bedroom()
