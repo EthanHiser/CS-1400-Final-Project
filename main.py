@@ -5,12 +5,13 @@ class Player():
 		self.name = input(f"GAME BEGUN.\nWhat is your name?\n").title()
 		print(f"{self.name} begins a maybe-not-so-epic quest!\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.\n")
 
+#multiple variables that will be called, saved, and loaded.
 inventory = []
 BedroomVar = 0
 FrontyardVar = 0
 DresserVar = 0
 MirrorVar = 0
-
+ToolboxVar = 0
 
 class Menu(Player):
 #Class that will be called multiple times to allow player many commands
@@ -241,9 +242,11 @@ def DownHall():
 
 def Garage():
 	ui = ""
-	print(f"Perhaps the only room that appears like its pre-war self; the garage is where your nearly handmade 'car' is dimly light by a single bulb.")
+	global ToolboxVar
+	toolbox = Iti("toolbox")
+	print(f"Perhaps the only room that appears like its pre-war self; the garage is where your nearly handmade 'car'\nis dimly light as well as a {toolbox} by a single bulb.")
 	while ui != "Menu":
-		ui = input(f"/// Inputs: 'West', 'Car' ///\n").title()
+		ui = input(f"/// Inputs: 'West', 'Interact', 'Car' ///\n").title()
 		if ui == "Menu":
 			Menu()
 			Garage()
@@ -252,6 +255,29 @@ def Garage():
 		elif ui == "Car":
 			Car()
 			Garage()
+		elif ui == "Interact":
+			ui = input(f"\t/// What do you interact with? ///\n").title()
+			if ui == "Car":
+				Car()
+				Garage()
+			elif ui == "Toolbox":
+				if ToolboxVar == 0:
+					print(f"\nYou open the rusty red toolbox and find two old batteries.\n")
+					print(f"+ Batteries\n")
+					inventory.append(f"Batteries")
+					ToolboxVar = 1
+					if "Dead Flashlight" in inventory:
+						print(f"With your new found batteries, you recharge the old flashlight making it useful once more.")
+						print(f"+ Charged Flashlight\n- Dead Flashlight\n- Batteries\n")
+						inventory.append(f"Charged Flashlight")
+						inventory.remove(f"Dead Flashlight")
+						inventory.remove(f"Batteries")
+				else:
+					print(f"\nYou open the damaged red toolbox again but find nothing of interest.\n")
+			else:
+				print(f"\nInput not recognized or not valid right now.\n")
+				Garage()
+
 		else:
 			print(f"\nInput not recognized; try again.\n")
 			Garage()
@@ -274,7 +300,7 @@ def Cellar():
 
 def DeepCellar():
 	ui = ""
-	if " Charged Flashlight" in inventory:
+	if "Charged Flashlight" in inventory:
 		print(f"Now able to see with your flashlight, you can see.")
 		while ui != "Menu":
 			ui = input(f"/// Inputs: 'West' ///\n").title()
