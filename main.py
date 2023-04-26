@@ -41,18 +41,26 @@ class Car():
 	def __init__(self):
 		print("Car!")
 
+def Iti(word):
+#function to italicize words (words that are interactable or grabbable)
+	italics = '\033[3m'
+	end = '\033[0m'
+	word = (italics + word + end)
+	return word
+
 ###-----###-----###-----###-----###-----###-----###-----###-----###-----###----###
 
 def Bedroom():
 #starting location
 	global BedroomVar
+	dresser = Iti("dresser")
 	ui = ""
 	if BedroomVar == 0:
-		print(f"Screams of the distance awaken you from your short lived slumber, and thus your stay here.\n\tYou sit up and out of the creaking bed, grab your rifle, begin to head to the garage.")
+		print(f"Screams of the distance awaken you from your short lived slumber, and thus your stay here.\n\tYou sit up and out of the creaking bed, grab your rifle off the {dresser}, begin to head to the garage.")
 	else:
 		print(f"You re-enter the master bedroom; though there is not much of interest in here.")
 	while ui != "Menu":
-		ui = input(f"/// Inputs: 'East', 'West', 'South' ///\n").title()
+		ui = input(f"/// Inputs: 'East', 'West', 'South', 'Interact' ///\n").title()
 		if ui == "Menu":
 			Menu()
 			Bedroom()
@@ -65,6 +73,12 @@ def Bedroom():
 		elif ui == "West":
 			BedroomVar = 1
 			Bathroom()
+		elif ui == "Interact":
+			ui = input(f"\t/// What do you interact with? ///\n").title()
+			if ui == "Dresser":
+				print(f"\nYou open the dresser and find an old flashlight, but upon clicking it you find it has no batteries.\n")
+				print(f"+ Flashlight!\n")
+				inventory.append("Flashlight")
 		else:
 			print(f"\nInput not recognized; try again.\n")
 			Bedroom()
