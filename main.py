@@ -5,10 +5,12 @@ class Player():
 		self.name = input(f"GAME BEGUN.\nWhat is your name?\n").title()
 		print(f"{self.name} begins a maybe-not-so-epic quest!\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.\n")
 
-#multiple variables that will be called, saved, and loaded
 inventory = []
 BedroomVar = 0
 FrontyardVar = 0
+DresserVar = 0
+MirrorVar = 0
+
 
 class Menu(Player):
 #Class that will be called multiple times to allow player many commands
@@ -35,6 +37,9 @@ class Menu(Player):
 					print()
 				else:
 					print(f"\nInput was not recognized, returning to menu.")
+			else:
+				print(f"\nInput not recognized; try again.")
+				Menu()
 
 class Car():
 #Class for the primary game objective (fixing and leaving through car)
@@ -48,17 +53,18 @@ def Iti(word):
 	word = (italics + word + end)
 	return word
 
-###-----###-----###-----###-----###-----###-----###-----###-----###-----###----###
+###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---
 
 def Bedroom():
 #starting location
 	global BedroomVar
+	global DresserVar
 	dresser = Iti("dresser")
 	ui = ""
 	if BedroomVar == 0:
 		print(f"Screams of the distance awaken you from your short lived slumber, and thus your stay here.\n\tYou sit up and out of the creaking bed, grab your rifle off the {dresser}, begin to head to the garage.")
 	else:
-		print(f"You re-enter the master bedroom; though there is not much of interest in here.")
+		print(f"You re-enter the master bedroom; not much is here besides a {dresser} and bedframe.")
 	while ui != "Menu":
 		ui = input(f"/// Inputs: 'East', 'West', 'South', 'Interact' ///\n").title()
 		if ui == "Menu":
@@ -76,23 +82,51 @@ def Bedroom():
 		elif ui == "Interact":
 			ui = input(f"\t/// What do you interact with? ///\n").title()
 			if ui == "Dresser":
-				print(f"\nYou open the dresser and find an old flashlight, but upon clicking it you find it has no batteries.\n")
-				print(f"+ Flashlight!\n")
-				inventory.append("Flashlight")
+				if DresserVar == 0:
+					print(f"\nYou open the dresser and find an old flashlight, but upon clicking it you find it has no batteries.\n")
+					print(f"+ Flashlight!\n")
+					inventory.append("Dead Flashlight")
+					DresserVar = 1
+					if "Batteries" in inventory:
+						print(f"You place your batteries from the toolbox into the flashlight; making them useful once more.\n")
+						print(f"+ Charged Flashlight!\n- Dead Flashlight!\n- Batteries!\n")
+						inventory.append(f"Charged Flashlight")
+						inventory.remove(f"Dead Flashlight")
+						inventory.remove(f"Batteries")
+				else:
+					print(f"\nYou open the dresser again and find nothing.\n")
+			else:
+				print(f"\nInput either not recognized or not valid right now.\n")
+				Bedroom()
 		else:
 			print(f"\nInput not recognized; try again.\n")
 			Bedroom()
 
 def Bathroom():
 	ui = ""
-	print(f"You enter the master bedroom's bathroom. In it, cracked mirror and stained walls.")
+	global MirrorVar
+	mirror = Iti("mirror")
+	print(f"You enter the master bedroom's bathroom. In it, cracked {mirror} and stained walls.")
 	while ui != "Menu":
-		ui == input(f"/// Inputs: 'East' ///\n").title()
+		ui = input(f"/// Inputs: 'East', 'Interact' ///\n").title()
 		if ui == "Menu":
 			Menu()
 			Bathroom()
 		elif ui == "East":
 			Bedroom()
+		elif ui == "Interact":
+			ui = input(f"\t/// What do you interact with? ///\n").title()
+			if ui == "Mirror":
+				if MirrorVar == 0:
+					print(f"\nYou open the damaged mirror and pull out a few bobby pins.\n")
+					print(f"+ Bobby Pins\n")
+					inventory.append(f"Bobby Pins")
+					MirrorVar = 1
+				else:
+					print(f"\nYou re-open the bathroom mirror but find only forgotten medicine bottles.\n")
+			else:
+				print(f"\nInput not recognized or not valid right now.\n")
+				Bathroom()
 		else:
 			print(f"\nInput not recognized; try again.\n")
 			Bathroom()
