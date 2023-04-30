@@ -16,6 +16,10 @@ ToolboxVar = 0
 CarVar = 0
 ChairVar = 0
 LightbulbVar = 0
+HoseVar = 0
+PipeVar = 0
+StickVar = 0
+BladeVar = 0
 
 class Menu(Player):
 #Class that will be called multiple times to allow player many commands
@@ -51,9 +55,11 @@ class Car():
 	def __init__(self):
 		global CarVar
 		ui = ""
+		if CarObjevInven == []:
+			print(f"\n\nGame Complete!\n\n")
 		if CarVar == 0:
 			print(f"\nYou get get into your somber excuse of a 'car' and start the engine.\n\tUpon starting it though the vehicle sputters into silence. Opening the hood you realize its cooling fan is gone;\n\t\tin fact, the hoses, exhuast, air filter, and lights are gone. You've been robbed.\n")
-			print(f"\t/// Objective: Get {CarObjecInven} ///\n")
+			print(f"\t/// Objective: Get {CarObjevInven} ///\n")
 			CarVar = 1
 		else:
 			print(f"\n\t/// Objective: Get {CarObjevInven} ///\n")
@@ -211,6 +217,8 @@ def DiningRoom():
 				Kitchen()
 			elif ui == "Hallway":
 				DownHall()
+			else:
+				print(f"\nInput not recognized; try again.\n")
 		elif ui == "East":
 			LivingRoom()
 		elif ui == "South":
@@ -269,10 +277,15 @@ def Kitchen():
 			Kitchen()
 
 def DownHall():
+	global BladeVar
 	ui = ""
-	print(f"You pass by frames of photos of bygone children; through the home's backdoor you see the moon-lit yard")
+	blade = Iti(f"blade")
+	if BladeVar == 0:
+		print(f"You pass by frames of photos of bygone children; through the home's backdoor you see the moon-lit yard.\n\tOn the ground you see some sort of {blade}.")
+	else:
+		print(f"You pass by frames of photos of bygone children; through the home's backdoor you see the moon-lit yard.")
 	while ui != "Menu":
-		ui = input(f"/// Inputs: 'North', 'West', 'South' ///\n").title()
+		ui = input(f"/// Inputs: 'North', 'West', 'South', 'Interact' ///\n").title()
 		if ui == "Menu":
 			Menu()
 			DownHall()
@@ -282,6 +295,25 @@ def DownHall():
 			Kitchen()
 		elif ui == "South":
 			DiningRoom()
+		elif ui == "Interact":
+			ui = input(f"\t/// What do you interact with? ///\n").title()
+			if ui == "Blade":
+				if BladeVar == 0:
+					print(f"\nYou carefully pick up the gray, shining blade from the floor.\n")
+					print(f"+ Blade\n")
+					inventory.append(f"Blade")
+					BladeVar = 1
+					if "Stick" in inventory:
+						print(f"Now; with your stick from earlier, you craft a shiv.")
+						print(f"+ Shiv\n- Blade\n- Stick")
+						inventory.append(f"Shiv")
+						inventory.remove(f"Blade")
+						inventory.remove(f"Stick")
+				else:
+					print(f"\nHaving already picked up the blade, you cannot again.\n")
+			else:
+				print(f"\nInput not recognized or not valid right now.\n")
+				DownHall()
 		else:
 			print(f"\nInput not recognized; try again.\n")
 			DownHall()
@@ -345,16 +377,37 @@ def Cellar():
 			Cellar()
 
 def DeepCellar():
+	global PipeVar
 	ui = ""
+	pipe = Iti("pipe")
 	if "Charged Flashlight" in inventory:
-		print(f"Now able to see with your flashlight, you can see.")
+		if PipeVar == 0:
+			print(f"Now able to see with your flashlight, you can see the source of the dripping sound: a leaky {pipe}.\n\tThere's also overgrown cobwebs, and long-forgotten boxes.")
+		else:
+			print(f"Here in the deep cellar, you see the remains of the leaky pipe you cut, some cobwebs, and old boxes.")
 		while ui != "Menu":
-			ui = input(f"/// Inputs: 'West' ///\n").title()
+			ui = input(f"/// Inputs: 'West', 'Interact' ///\n").title()
 			if ui == "Menu":
 				Menu()
 				DeepCellar()
 			elif ui == "West":
 				Cellar()
+			elif ui == "Interact":
+				ui = input(f"/// What do you interact with? ///\n").title()
+				if ui == "Pipe":
+					if PipeVar == 0:
+						if "Shiv" in inventory:
+							print(f"\nWith your shiv, you cut off a piece of the small pipe for your car.\n")
+							print(f"+ Pipe\n")
+							inventory.append(f"Pipe")
+							CarObjevInven.remove(f"Exhaust Pipe")
+							PipeVar = 1
+						else:
+							print(f"\nLooking at the pipe, you realize it's the perfect size for your car, but you need something strong to remove it\n")
+					else:
+						print(f"\nYou can't interact with the pipe again, as it is gone. :(\n")
+				else:
+					print(f"\nInput either not recognized or not valid right now.\n")
 			else:
 				print(f"\nInput not recognized; try again.\n")
 				DeepCellar()
@@ -403,32 +456,75 @@ def Frontyard():
 			Frontyard()
 
 def FrontyardEast():
+	global StickVar
 	ui = ""
-	print(f"You walk farther east from the house, any more distance would be dangerous.")
+	sticks = Iti(f"sticks")
+	if StickVar == 0:
+		print(f"You walk farther east from the house, not much is here but a pile of {sticks} and a lone red baneberry.")
+	else:
+		print(f"You walk farther east from the house, not much is here but a lonesome red baneberry.")
 	while ui != "Menu":
-		ui = input(f"/// Inputs: 'West' ///\n").title()
+		ui = input(f"/// Inputs: 'West', 'Interact' ///\n").title()
 		if ui == "Menu":
 			Menu()
 			FrontyardEast()
 		elif ui == "West":
 			Frontyard()
+		elif ui == "Interact":
+			ui = input(f"\t/// What do you interact with? ///\n").title()
+			if ui == "Sticks":
+				if StickVar == 0:
+					print(f"\nYou pick up a stick.\n")
+					print(f"+ Stick")
+					inventory.append(f"Stick")
+					StickVar = 1
+					if "Blade" in inventory:
+						print(f"Now; with your blade from earlier, you craft a shiv.")
+						print(f"+ Shiv\n- Stick\n- Blade")
+						inventory.append(f"Shiv")
+						inventory.remove(f"Blade")
+						inventory.remove(f"Stick")
+				else:
+					print(f"\nHaving already picked up a stick, there is no longer one to.\n")
+			else:
+				print(f"\nInput not recognized or not valid right now.\n")
 		else:
 			print(f"\nInput not recognized; try again.\n")
 			FrontyardEast()
 
 def FrontyardWest():
-
 	ui = ""
-	print(f"You walk farther west from the house, any more distance would be dangerous.")
+	global HoseVar
+	hose = Iti(f"hose")
+	if HoseVar == 0:
+		print(f"You walk a little farther west of the house and see a dark green garden {hose} attached to it by a large vine overtaking the wall.")
+	else:
+		print(f"You walk a little farther west of the house and see a large vine overtaking the wall.")
 	while ui != "Menu":
-		ui = input(f"/// Inputs: 'East' ///\n").title()
+		ui = input(f"/// Inputs: 'East', 'Interact' ///\n").title()
 		if ui == "Menu":
 			Menu()
 			FrontyardWest()
 		elif ui == "East":
 			Frontyard()
+		elif ui == "Interact":
+			ui = input(f"\t/// What do you interact with? ///\n").title()
+			if ui == "Hose":
+				if HoseVar == 0:
+					if "Bobby Pins" in inventory:
+						print(f"\nUsing your bobby pins you pick the padlock chaining the hose\n")
+						print(f"+ Hose\n")
+						inventory.append(f"Hose")
+						CarObjevInven.remove(f"Hose")
+						HoseVar = 1
+					else:
+						print(f"\nLooking at the hose you realize that it's chained to the wall, locked by a padlock.\n\tYou need some way of opening the lock.\n")
+				else:
+					print(f"\nSince you've already interacted with the hose, you can't again.\n")
+			else:
+				print(f"\nInput not recognized or not valid right now.\n")
 		else:
-			print(f"\nInput not recpgnized; try again.\n")
+			print(f"\nInput not recognized; try again.\n")
 			FrontyardWest()
 
 Player()
