@@ -6,12 +6,16 @@ class Player():
 		print(f"{self.name} begins a maybe-not-so-epic quest!\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.\n")
 
 #multiple variables that will be called, saved, and loaded.
+CarObjevInven = ["Cooling Fan", "Hose", "Air Filter", "Exhaust Pipe", "Light Bulb"]
 inventory = []
 BedroomVar = 0
 FrontyardVar = 0
 DresserVar = 0
 MirrorVar = 0
 ToolboxVar = 0
+CarVar = 0
+ChairVar = 0
+LightbulbVar = 0
 
 class Menu(Player):
 #Class that will be called multiple times to allow player many commands
@@ -45,7 +49,16 @@ class Menu(Player):
 class Car():
 #Class for the primary game objective (fixing and leaving through car)
 	def __init__(self):
-		print("Car!")
+		global CarVar
+		ui = ""
+		if CarVar == 0:
+			print(f"\nYou get get into your somber excuse of a 'car' and start the engine.\n\tUpon starting it though the vehicle sputters into silence. Opening the hood you realize its cooling fan is gone;\n\t\tin fact, the hoses, exhuast, air filter, and lights are gone. You've been robbed.\n")
+			print(f"\t/// Objective: Get {CarObjecInven} ///\n")
+			CarVar = 1
+		else:
+			print(f"\n\t/// Objective: Get {CarObjevInven} ///\n")
+
+
 
 def Iti(word):
 #function to italicize words (words that are interactable or grabbable)
@@ -207,17 +220,50 @@ def DiningRoom():
 			DiningRoom()
 
 def Kitchen():
+	global LightbulbVar
+	global CarObjevInven
+	global ChairVar
 	ui = ""
-	print(f"Walking on the checkboard floor you see a disheveled, looted kitchen. Any trace of food is simply gone.")
+	lightbulb = Iti("lightbulb")
+	chair = Iti("chair")
+	if LightbulbVar == 1:
+		print(f"Walking on the checkerboard floor you see a disheveled, looted kitchen. Any trace of food is simply gone.")
+	elif ChairVar == 1:
+		print(f"Walking on the checkerboard floor you see a disheveled, looted kitchen. Any trace of food is simply gone.\n\tThough you do see a flickering {lightbulb} above a now right-side up chair.")
+	else:
+		print(f"Walking on the checkerboard floor you see a disheveled, looted kitchen. Any trace of food is simply gone.\n\tThough you do see a flickering {lightbulb} above an overturned {chair}.")
 	while ui != "Menu":
-		ui = input(f"/// Inputs: 'East', 'South' ///\n").title()
-		if ui == "'Menu":
+		ui = input(f"/// Inputs: 'East', 'South', 'Interact' ///\n").title()
+		if ui == "Menu":
 			Menu()
 			Kitchen()
 		elif ui == "East":
 			DownHall()
 		elif ui == "South":
 			DiningRoom()
+		elif ui == "Interact":
+			ui = input(f"\t/// What do you interact with? ///\n").title()
+			if ui == "Lightbulb":
+				if LightbulbVar == 0:
+					if ChairVar == 0:
+						print(f"\nYou attempt to unscrew the lightbulb on the ceiling, but just can't reach it.\n")
+					else:
+						print(f"\nStanding on the chair, you unscrew the lightbulb and stash it.\n")
+						print(f"+ Light Bulb\n")
+						inventory.append(f"Light Bulb")
+						CarObjevInven.remove(f"Light Bulb")
+						LightbulbVar = 1
+				else:
+					print(f"\nHaving already removed the light bulb, you can no longer interact with it.\n")
+			elif ui == "Chair":
+				if ChairVar == 0:
+					print(f"\nYou turn the kitchen chair on the floor right-side up.\n")
+					ChairVar = 1
+				else:
+					print(f"\nHaving already turned up the chair, you can no longer interact with it.\n")
+			else:
+				print(f"\nInput not recognized or not valid right now.\n")
+				Kitchen()
 		else:
 			print(f"\nInput not recognized; try again.\n")
 			Kitchen()
