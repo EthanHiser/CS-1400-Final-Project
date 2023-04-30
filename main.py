@@ -20,6 +20,8 @@ HoseVar = 0
 PipeVar = 0
 StickVar = 0
 BladeVar = 0
+FanVar = 0
+UnitVar = 0
 
 class Menu(Player):
 #Class that will be called multiple times to allow player many commands
@@ -153,9 +155,14 @@ def Bathroom():
 
 def KidsRoom():
 	ui = ""
-	print(f"Seeing strewn toys and clothing about; you must be in the room that was once for the children of this home.")
+	global FanVar
+	fan = Iti("fan")
+	if FanVar == 0:
+		print(f"Seeing strewn toys and clothing about; you must be in the room that was once for the children of this home.\n\tAbove a derelict cradle you see a small celing {fan}.")
+	else:
+		print(f"Seeing strewn toys and clothing about; you must be in the room that was once for the children of this home.")
 	while ui != "Menu":
-		ui = input(f"/// Inputs: 'North', 'East' ///\n").title()
+		ui = input(f"/// Inputs: 'North', 'East', 'South' 'Interact' ///\n").title()
 		if ui == "Menu":
 			Menu()
 			KidsRoom()
@@ -163,9 +170,61 @@ def KidsRoom():
 			Bedroom()
 		elif ui == "East":
 			UpHall()
+		elif ui == "South":
+			Roof()
+		elif ui == "Interact":
+			ui = input(f"\t/// What do you interact with? ///\n").title()
+			if ui == "Fan":
+				if FanVar == 0:
+					print(f"\nYou rip the fan off the ceiling, dust and a cockroach fall to the floor.\n")
+					print(f"+ Fan\n")
+					inventory.append(f"Fan")
+					CarObjevInven.remove(f"Cooling Fan")
+					FanVar = 1
+				else:
+					print(f"\nOne cannot simply interact with a ceiling fan that which has already been so.\n")
+			else:
+				print(f"\nInput not recognized or not valid right now.\n")
+				KidsRoom()
 		else:
 			print(f"\nInput not recognized; try again.\n")
 			KidsRoom()
+
+def Roof():
+	ui = ""
+	global UnitVar
+	unit = Iti("unit")
+	if UnitVar == 0:
+		print(f"Opening the window, you step out onto the roof. From up here you can see the blazing, orange glow in the distance.\n\tTo your right is an old air-conditioning {unit} that may still work.")
+	else:
+		print(f"Opening the window, you step out onto the roof. From up here you can see the blazing, orange glow in the distance.")
+	while ui != "Menu":
+		ui = input(f"/// Inputs: 'North', 'Interact' ///\n").title()
+		if ui == "Menu":
+			Menu()
+			Roof()
+		elif ui == "North":
+			KidsRoom()
+		elif ui == "Interact":
+			ui = input(f"\t/// What do you interact with? ///\n").title()
+			if ui == "Unit":
+				if UnitVar == 0:
+					if "Shiv" in inventory:
+						print(f"\nYou cut out the air-conditioning unit to use as a makeshift cooler.\n")
+						print(f"+ Cooler\n")
+						inventory.append(f"Cooler")
+						CarObjevInven.remove(f"Air Filter")
+						UnitVar = 1
+					else:
+						print(f"\nYou think that you could probaly put this cooler to good use if you could only extract it.\n")
+				else:
+					print(f"Since you've already extracted the AC, ya just can't 'gain.")
+			else:
+				print(f"\nInput not recognized or not valid right now.\n")
+				Roof()
+		else:
+			print(f"\nInput not recognized; try again.\n")
+			Roof()
 
 def UpHall():
 	ui = ""
