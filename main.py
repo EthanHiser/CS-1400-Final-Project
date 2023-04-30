@@ -1,3 +1,4 @@
+import pickle
 #main file for text-based game
 class Player():
 #Class to determine player's name and initialize program
@@ -22,6 +23,8 @@ StickVar = 0
 BladeVar = 0
 FanVar = 0
 UnitVar = 0
+FanShellVar = 0
+GooseVar = 0
 
 class Menu(Player):
 #Class that will be called multiple times to allow player many commands
@@ -32,8 +35,10 @@ class Menu(Player):
 			if ui == "I":
 				print(f"\nInventory: {inventory}")
 			elif ui == "S":
+				Save()
 				print(f"\nGame Saved!")
 			elif ui == "L":
+				Load()
 				print(f"\nGame Loaded!")
 			elif ui == "R":
 				print()
@@ -52,13 +57,104 @@ class Menu(Player):
 				print(f"\nInput not recognized; try again.")
 				Menu()
 
+class Save():
+#Class for saving all of the variables of the player/map
+	with open("game.dat", "wb") as f:
+		pickle.dump(CarObjevInven, f)
+		pickle.dump(inventory, f)
+		pickle.dump(Player, f)
+		pickle.dump(BedroomVar, f)
+		pickle.dump(FrontyardVar, f)
+		pickle.dump(DresserVar, f)
+		pickle.dump(MirrorVar, f)
+		pickle.dump(ToolboxVar, f)
+		pickle.dump(CarVar, f)
+		pickle.dump(ChairVar, f)
+		pickle.dump(LightbulbVar, f)
+		pickle.dump(HoseVar, f)
+		pickle.dump(PipeVar, f)
+		pickle.dump(BladeVar, f)
+		pickle.dump(FanVar, f)
+		pickle.dump(UnitVar, f)
+		pickle.dump(FanShellVar, f)
+		pickle.dump(GooseVar, f)
+
+class Load():
+	def __init__(self):
+		global Player
+		global inventory
+		global CarObjevInven
+		global BedroomVar
+		global FrontyardVar
+		global DresserVar
+		global MirrorVar
+		global ToolboxVar
+		global CarVar
+		global ChairVar
+		global LightbulbVar
+		global HoseVar
+		global PipeVar
+		global StickVar
+		global BladeVar
+		global FanVar
+		global UnitVar
+		global FanShellVar
+		global GooseVar
+		try:
+			with open("game.dat", "rb") as f:
+				CarObjevInven = pickle.load(f)
+				inventory = pickle.load(f)
+				Player = pickle.load(f)
+				BedroomVar = pickle.load(f)
+				FrontyardVar = pickle.load(f)
+				DresserVar = pickle.load(f)
+				MirrorVar = pickle.load(f)
+				ToolboxVar = pickle.load(f)
+				CarVar = pickle.load(f)
+				ChairVar = pickle.load(f)
+				LightbulbVar = pickle.load(f)
+				HoseVar = pickle.load(f)
+				PipeVar = pickle.load(f)
+				BladeVar = pickle.load(f)
+				FanVar = pickle.load(f)
+				UnitVar = pickle.load(f)
+				FanShellVar = pickle.load(f)
+				GooseVar = pickle.load(f)
+		except FileNotFoundError:
+			print(f"\nFile not found!")
+
+
 class Car():
 #Class for the primary game objective (fixing and leaving through car)
 	def __init__(self):
 		global CarVar
 		ui = ""
+		CarObjevInven = []
 		if CarObjevInven == []:
-			print(f"\n\nGame Complete!\n\n")
+			print(f"\n ||| Now, with all the required car parts, you are able to successfully start the engine of your vehicle.\n\tDriving out of the garage you see an illuminated sign that indicates an upcoming offshoot. ||| \n")
+			while ui != "Main":
+				ui = input(f"\t/// Do you take the 'main' path or the 'offshoot'? ///\n").title()
+				if ui == "Main":
+					print(f"\nDriving continuouly down the main path, you are able to leave the home's property a final time.\n\tHopefuly this world has intentions in your favor...\n\n ||| Thanks for playing! Goodbye. |||\n")
+					quit()
+				elif ui == "Offshoot":
+					print(f"\nLeaving the main path, and taking the offshoot, you drive down an unpaved road until you see a small shack.\n\tUpon entering you see nothing but a large, metal door and a keypad.\n")
+					while ui != "1218":
+						ui = input(f"/// What is the code? ///\n").title()
+						if ui == "1218":
+							print(f"\nThe metal door loudly opens revealing a single, white LED light.\n\tEntering the small room the door closes behind you and the room shakes downward.\n\t\tThe door opens again revealing an open earth cave.")
+							print(f"\t\t\tNestled in the stalagmites you see a grand vault door and labeled above it a quote:\n\t\t\t\t\"Qui quasi anas sonant, sunt qui supersunt.\"\n")
+							print(f"||| Thanks for playing! goodbye. |||\n")
+							quit()
+						elif ui == "Exit":
+							print(f"\nFaling to know the code, you exit the shack and drive down the pathway.\n\tHopefuly this world has intenions in your favor...\n\n\t ||| Thanks for playing! Goodbye. |||\n")
+							quit()
+						else:
+							print(f"\nThat was not the code, input 'Exit' to leave the shack.\n")
+						
+				else:
+					print(f"\nInput not recognized or not valid right now.\n")
+			quit()
 		if CarVar == 0:
 			print(f"\nYou get get into your somber excuse of a 'car' and start the engine.\n\tUpon starting it though the vehicle sputters into silence. Opening the hood you realize its cooling fan is gone;\n\t\tin fact, the hoses, exhuast, air filter, and lights are gone. You've been robbed.\n")
 			print(f"\t/// Objective: Get {CarObjevInven} ///\n")
@@ -66,10 +162,8 @@ class Car():
 		else:
 			print(f"\n\t/// Objective: Get {CarObjevInven} ///\n")
 
-
-
 def Iti(word):
-#function to italicize words (words that are interactable or grabbable)
+#function to italicize words (things that are interactable)
 	italics = '\033[3m'
 	end = '\033[0m'
 	word = (italics + word + end)
@@ -116,7 +210,7 @@ def Bedroom():
 						inventory.remove(f"Dead Flashlight")
 						inventory.remove(f"Batteries")
 				else:
-					print(f"\nYou open the dresser again and find nothing.\n")
+					print(f"\nYou open the dresser again and find nothing of interest.\n")
 			else:
 				print(f"\nInput either not recognized or not valid right now.\n")
 				Bedroom()
@@ -177,10 +271,18 @@ def KidsRoom():
 			if ui == "Fan":
 				if FanVar == 0:
 					print(f"\nYou rip the fan off the ceiling, dust and a cockroach fall to the floor.\n")
-					print(f"+ Fan\n")
-					inventory.append(f"Fan")
-					CarObjevInven.remove(f"Cooling Fan")
+					print(f"+ Fan Blades\n")
+					inventory.append(f"Fan Blades")
 					FanVar = 1
+					if "Fan Shell" in inventory:
+						print(f"Using the fan shell from the cellar, you are able to make a portable cooler.\n")
+						print(f"+ Cooler\n")
+						inventory.append(f"Cooler")
+						inventory.remove(f"Fan Blades")
+						inventory.remove(f"Fan Shell")
+						CarObjevInven.remove(f"Cooling Fan")
+					else:
+						print(f"You could use these fan blades for something if you had a shell to hold them in.\n")
 				else:
 					print(f"\nOne cannot simply interact with a ceiling fan that which has already been so.\n")
 			else:
@@ -193,11 +295,15 @@ def KidsRoom():
 def Roof():
 	ui = ""
 	global UnitVar
+	global GooseVar
 	unit = Iti("unit")
-	if UnitVar == 0:
-		print(f"Opening the window, you step out onto the roof. From up here you can see the blazing, orange glow in the distance.\n\tTo your right is an old air-conditioning {unit} that may still work.")
+	if GooseVar == 0:
+		print(f"Opening the window, you step out onto the roof. From up here you can see a blazing, orange glow in the distance.\n\tAs you look at its fierce size, a herd of geese fly overhead. To your right is an old air-conditioning {unit} that may still work.")
+		GooseVar = 1
+	elif UnitVar == 0:
+		print(f"Opening the window, you step out onto the roof. From up here you can see a blazing, orange glow in the distance.\n\tTo your right is an old air-conditioning {unit} that may still work.")
 	else:
-		print(f"Opening the window, you step out onto the roof. From up here you can see the blazing, orange glow in the distance.")
+		print(f"Opening the window, you step out onto the roof. From up here you can see a blazing, orange glow in the distance.")
 	while ui != "Menu":
 		ui = input(f"/// Inputs: 'North', 'Interact' ///\n").title()
 		if ui == "Menu":
@@ -210,9 +316,9 @@ def Roof():
 			if ui == "Unit":
 				if UnitVar == 0:
 					if "Shiv" in inventory:
-						print(f"\nYou cut out the air-conditioning unit to use as a makeshift cooler.\n")
+						print(f"\nYou cut out the air-conditioning unit to use as a makeshift air filter.\n")
 						print(f"+ Cooler\n")
-						inventory.append(f"Cooler")
+						inventory.append(f"Air Filter")
 						CarObjevInven.remove(f"Air Filter")
 						UnitVar = 1
 					else:
@@ -288,7 +394,6 @@ def DiningRoom():
 
 def Kitchen():
 	global LightbulbVar
-	global CarObjevInven
 	global ChairVar
 	ui = ""
 	lightbulb = Iti("lightbulb")
@@ -420,10 +525,12 @@ def Garage():
 			Garage()
 
 def Cellar():
+	global FanShellVar
 	ui = ""
-	print(f"You walk down into the cellar; all is silent but the cyclic dripping from somewhere.")
+	crates = Iti("crates")
+	print(f"You walk down into the cellar; all is silent but the cyclic dripping from somewhere.\n\tThere are a few {crates} that look un-opened.")
 	while ui != "Menu":
-		ui = input(f"/// Inputs: 'East', 'Up' ///\n").title()
+		ui = input(f"/// Inputs: 'East', 'Up', 'Interact' ///\n").title()
 		if ui == "Menu":
 			Menu()
 			Cellar()
@@ -431,6 +538,24 @@ def Cellar():
 			DeepCellar()
 		elif ui == "Up":
 			LivingRoom()
+		elif ui == "Interact":
+			ui = input(f"\t/// What do you interact with? ///\n").title()
+			if ui == "Crates":
+				if FanShellVar == 0:
+					print(f"\nOpening the crates, you unfortunately don't see much of importance but a fan shell with no blades.\n")
+					inventory.append(f"Fan Shell")
+					FanShellVar = 1
+					if "Fan Blades" in inventory:
+						print(f"Using your fan blades you pulled from the kids' room, you are able to make a portable cooler.\n")
+						print(f"+ Cooler\n")
+						inventory.append(f"Cooler")
+						inventory.remove(f"Fan Blades")
+						inventory.remove(f"Fan Shell")
+						CarObjevInven.remove(f"Cooling Fan")
+				else:
+					print(f"\nOpening the crates again, you don't see much of importance.\n")
+			else:
+				print(f"\nInput not recognized or not valid right now.\n")
 		else:
 			print(f"\nInput not recognized; try again.\n")
 			Cellar()
@@ -495,7 +620,7 @@ def Frontyard():
 	if FrontyardVar == 0:
 		print(f"As you open the front door, leaving the home, a faraway explosion is heard followed by more screams.\n\tYou should leave soon.")
 	else:
-		print(f"You walk by the gray picket fences in front of the house")
+		print(f"You walk by the gray picket fences in front of the house.")
 	while ui != "Menu":
 		ui = input(f"/// Inputs: 'North', 'East', 'West' ///\n").title()
 		if ui == "Menu":
