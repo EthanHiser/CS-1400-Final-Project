@@ -55,7 +55,8 @@ class Menu(Player):
 	def __init__(self):
 		ui = ""
 		while ui != "R":
-			ui = input(f"\nThis is the menu, here you may:\nI - View Inventory\nS - Save Game\nL - Load Game\nR - Return to Game\nQ - Quit Game\n").title()
+			print(f"\n---///---///---[ MENU ]---///---///---")
+			ui = input(f"\nThis is the menu, here you may:\nI - View Inventory\nS - Save Game\nL - Load Game\nR - Return to Game\nQ - Quit Game\n\n  ---///---///---///---///---///---\n").title()
 			if ui == "I":
 				print(f"\nInventory: {inventory}")
 			elif ui == "S":
@@ -82,7 +83,7 @@ class Menu(Player):
 				ui = ""
 				ui = input("\tWould you like to 'quit' game or 'return' to menu to save?\n").title()
 				if ui == "Quit":
-					print(f"\nThanks for playing, goodbye.\n")
+					print(f"\n\tThanks for playing, goodbye.\n")
 					exit()
 				elif ui == "Return":
 					pass
