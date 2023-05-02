@@ -35,10 +35,10 @@ class Menu(Player):
 			if ui == "I":
 				print(f"\nInventory: {inventory}")
 			elif ui == "S":
-				Save()
+				save()
 				print(f"\nGame Saved!")
 			elif ui == "L":
-				Load()
+				load()
 				print(f"\nGame Loaded!")
 			elif ui == "R":
 				print()
@@ -56,73 +56,6 @@ class Menu(Player):
 			else:
 				print(f"\nInput not recognized; try again.")
 				Menu()
-
-class Save():
-#Class for saving all of the variables of the player/map
-	with open("game.dat", "wb") as f:
-		pickle.dump(CarObjevInven, f)
-		pickle.dump(inventory, f)
-		pickle.dump(Player, f)
-		pickle.dump(BedroomVar, f)
-		pickle.dump(FrontyardVar, f)
-		pickle.dump(DresserVar, f)
-		pickle.dump(MirrorVar, f)
-		pickle.dump(ToolboxVar, f)
-		pickle.dump(CarVar, f)
-		pickle.dump(ChairVar, f)
-		pickle.dump(LightbulbVar, f)
-		pickle.dump(HoseVar, f)
-		pickle.dump(PipeVar, f)
-		pickle.dump(BladeVar, f)
-		pickle.dump(FanVar, f)
-		pickle.dump(UnitVar, f)
-		pickle.dump(FanShellVar, f)
-		pickle.dump(GooseVar, f)
-
-class Load():
-	def __init__(self):
-		global Player
-		global inventory
-		global CarObjevInven
-		global BedroomVar
-		global FrontyardVar
-		global DresserVar
-		global MirrorVar
-		global ToolboxVar
-		global CarVar
-		global ChairVar
-		global LightbulbVar
-		global HoseVar
-		global PipeVar
-		global StickVar
-		global BladeVar
-		global FanVar
-		global UnitVar
-		global FanShellVar
-		global GooseVar
-		try:
-			with open("game.dat", "rb") as f:
-				CarObjevInven = pickle.load(f)
-				inventory = pickle.load(f)
-				Player = pickle.load(f)
-				BedroomVar = pickle.load(f)
-				FrontyardVar = pickle.load(f)
-				DresserVar = pickle.load(f)
-				MirrorVar = pickle.load(f)
-				ToolboxVar = pickle.load(f)
-				CarVar = pickle.load(f)
-				ChairVar = pickle.load(f)
-				LightbulbVar = pickle.load(f)
-				HoseVar = pickle.load(f)
-				PipeVar = pickle.load(f)
-				BladeVar = pickle.load(f)
-				FanVar = pickle.load(f)
-				UnitVar = pickle.load(f)
-				FanShellVar = pickle.load(f)
-				GooseVar = pickle.load(f)
-		except FileNotFoundError:
-			print(f"\nFile not found!")
-
 
 class Car():
 #Class for the primary game objective (fixing and leaving through car)
@@ -168,6 +101,49 @@ def Iti(word):
 	end = '\033[0m'
 	word = (italics + word + end)
 	return word
+
+def save():
+	with open("data.pkl", "wb") as f:
+		pickle.dump(CarObjevInven, f)
+		pickle.dump(inventory, f)
+		pickle.dump(BedroomVar, f)
+		pickle.dump(FrontyardVar, f)
+		pickle.dump(DresserVar, f)
+		pickle.dump(MirrorVar, f)
+		pickle.dump(ToolboxVar, f)
+		pickle.dump(CarVar, f)
+		pickle.dump(ChairVar, f)
+		pickle.dump(LightbulbVar, f)
+		pickle.dump(HoseVar, f)
+		pickle.dump(PipeVar, f)
+		pickle.dump(StickVar, f)
+		pickle.dump(BladeVar, f)
+		pickle.dump(FanVar, f)
+		pickle.dump(UnitVar, f)
+		pickle.dump(FanShellVar, f)
+		pickle.dump(GooseVar, f)
+def load():
+	global CarObjevInven, inventory, BedroomVar, FrontyardVar, DresserVar, MirrorVar, ToolboxVar, CarVar, ChairVar, LightbulbVar, HoseVar, PipeVar, StickVar, BladeVar, FanVar, UnitVar, FanShellVar, GooseVar
+	with open("data.pkl", "rb") as f:
+		CarObjevInven = pickle.load(f)
+		inventory = pickle.load(f)
+		BedroomVar = pickle.load(f)
+		FrontyardVar= pickle.load(f)
+		DresserVar = pickle.load(f)
+		MirrorVar = pickle.load(f)
+		ToolboxVar = pickle.load(f)
+		CarVar = pickle.load(f)
+		ChairVar = pickle.load(f)
+		LightbulbVar = pickle.load(f)
+		HoseVar = pickle.load(f)
+		PipeVar = pickle.load(f)
+		StickVar = pickle.load(f)
+		BladeVar = pickle.load(f)
+		FanVar = pickle.load(f)
+		UnitVar = pickle.load(f)
+		FanShellVar = pickle.load(f)
+
+	return CarObjevInven, inventory, BedroomVar, FrontyardVar, DresserVar, MirrorVar, ToolboxVar, CarVar, ChairVar, LightbulbVar, HoseVar, PipeVar, StickVar, BladeVar, FanVar, UnitVar, FanShellVar
 
 ###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---
 
