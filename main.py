@@ -31,17 +31,21 @@ class Player():
 			if StartVar == 0:
 				self.name = input(f"\nGAME BEGUN.\nWhat is your name?\n").title()
 				print(f"\n{self.name} begins a maybe-not-so-epic quest!\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.\n")
+				print(f"---===---===---===---===---===---===---===---\n")
 			else:
 				print(f"\nGAME RESUMED. \nReturning to your maybe-not-so epic quest, your progress has been saved! You will renew in the master bedroom.\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.\n")
+				print(f"---===---===---===---===---===---===---===---\n")
 		elif ui == "Resume":
 			filecheck()
 			if StartVar == 0:
 				print(f"\nNo previous game file found, starting new game.\n")
 				self.name = input(f"GAME BEGUN.\nWhat is your name?\n").title()
-				print(f"{self.name} begins a maybe-not-so-epic quest!\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.\n")
+				print(f"\n{self.name} begins a maybe-not-so-epic quest!\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.\n")
+				print(f"---===---===---===---===---===---===---===---\n")
 			else:
 				load()
 				print(f"\nGAME RESUMED. \nReturning to your maybe-not-so epic quest, your progress has been saved! You will renew in the master bedroom.\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.\n")
+				print(f"---===---===---===---===---===---===---===---\n")
 		else:
 			print(f"\nInput unkown; type either 'New' or 'Resume'.\n")
 			Player()
@@ -58,22 +62,30 @@ class Menu(Player):
 				save()
 				print(f"\nGame Saved!")
 			elif ui == "L":
-				try:
-					load()
-					print(f"\nGame Loaded!")
-				except FileNotFoundError:
-					print(f"\nGame file not found!")
+				print(f"\nLoading the game may overwrite unsaved progress; therefore, you may want to save before loading.")
+				ui = ""
+				ui = input("\tWould you like to 'load' game or 'return' to menu to save?\n").title()
+				if ui == "Load":
+					try:
+						load()
+						print(f"\nGame Loaded!")
+					except FileNotFoundError:
+						print(f"\nGame file not found!")
+				elif ui == "Return":
+					pass
+				else:
+					print(f"\nInput was not recognized, returning to menu.")
 			elif ui == "R":
 				print()
 			elif ui == "Q":
 				print(f"\nQuitting the game will NOT save; therefore, you may want to save before quitting.")
 				ui = ""
-				ui = input("Would you like to 'quit' game or 'return' to menu to save?\n")
-				if ui == "quit":
+				ui = input("\tWould you like to 'quit' game or 'return' to menu to save?\n").title()
+				if ui == "Quit":
 					print(f"\nThanks for playing, goodbye.\n")
 					exit()
-				elif ui == "return":
-					print()
+				elif ui == "Return":
+					pass
 				else:
 					print(f"\nInput was not recognized, returning to menu.")
 			else:
@@ -91,6 +103,7 @@ class Car():
 				ui = input(f"\t/// Do you take the 'main' path or the 'offshoot'? ///\n").title()
 				if ui == "Main":
 					print(f"\nDriving continuouly down the main path, you are able to leave the home's property a final time.\n\tHopefuly this world has intentions in your favor...\n\n ||| Thanks for playing! Goodbye. |||\n")
+					print(f"---===---===---===---===---===---===---===---\n")
 					quit()
 				elif ui == "Offshoot":
 					print(f"\nLeaving the main path, and taking the offshoot, you drive down an unpaved road until you see a small shack.\n\tUpon entering you see nothing but a large, metal door and a keypad taking numbers that correlate with letters h, g, f, e and d in that order.\n")
@@ -100,9 +113,11 @@ class Car():
 							print(f"\nThe metal door loudly opens revealing a single, white LED light.\n\tEntering the small room the door closes behind you and the room shakes downward.\n\t\tThe door opens again revealing an open earth cave.")
 							print(f"\t\t\tNestled in the stalagmites you see a grand vault door and labeled above it a quote:\n\t\t\t\t\"Qui quasi anas sonant, sunt qui supersunt.\"\n")
 							print(f"||| Thanks for playing! goodbye. |||\n")
+							print(f"---===---===---===---===---===---===---===---\n")
 							quit()
 						elif ui == "Exit":
 							print(f"\nFaling to know the code, you exit the shack and drive down the pathway.\n\tHopefuly this world has intenions in your favor...\n\n\t ||| Thanks for playing! Goodbye. |||\n")
+							print(f"---===---===---===---===---===---===---===---\n")
 							quit()
 						else:
 							print(f"\nThat was not the code, input 'Exit' to leave the shack.\n")
@@ -124,7 +139,15 @@ def Iti(word):
 	word = (italics + word + end)
 	return word
 
+def filecheck():
+	#this function checks if a previous game file is loadable, aids Player() class
+	try:
+		load()
+	except FileNotFoundError:
+		pass
+
 def save():
+#of course, function to save all relevant variables to data.pkl
 	with open("data.pkl", "wb") as f:
 		pickle.dump(StartVar, f)
 		pickle.dump(CarObjevInven, f)
@@ -147,6 +170,7 @@ def save():
 		pickle.dump(GooseVar, f)
 
 def load():
+	#of course, function to load all relevant variables from data.pkl
 	global StartVar, CarObjevInven, inventory, BedroomVar, FrontyardVar, DresserVar, MirrorVar, ToolboxVar, CarVar, ChairVar, LightbulbVar, HoseVar, PipeVar, StickVar, BladeVar, FanVar, UnitVar, FanShellVar, GooseVar
 	with open("data.pkl", "rb") as f:
 		StartVar = pickle.load(f)
@@ -182,7 +206,7 @@ def Bedroom():
 	if BedroomVar == 0:
 		print(f"Screams of the distance awaken you from your short lived slumber, and thus your stay here.\n\tYou sit up and out of the creaking bed, grab your rifle off the {dresser}, begin to head to the garage.")
 	else:
-		print(f"You re-enter the master bedroom; not much is here besides a {dresser} and bedframe.")
+		print(f"\nYou re-enter the master bedroom; not much is here besides a {dresser} and bedframe.")
 	while ui != "Menu":
 		ui = input(f"/// Inputs: 'East', 'West', 'South', 'Interact' ///\n").title()
 		if ui == "Menu":
@@ -224,7 +248,7 @@ def Bathroom():
 	ui = ""
 	global MirrorVar
 	mirror = Iti("mirror")
-	print(f"You enter the master bedroom's bathroom. In it, cracked {mirror} and stained walls.")
+	print(f"\nYou enter the master bedroom's bathroom. In it, cracked {mirror} and stained walls.")
 	while ui != "Menu":
 		ui = input(f"/// Inputs: 'East', 'Interact' ///\n").title()
 		if ui == "Menu":
@@ -254,9 +278,9 @@ def KidsRoom():
 	global FanVar
 	fan = Iti("fan")
 	if FanVar == 0:
-		print(f"Seeing strewn toys and clothing about; you must be in the room that was once for the children of this home.\n\tAbove a derelict cradle you see a small celing {fan}.")
+		print(f"\nSeeing strewn toys and clothing about; you must be in the room that was once for the children of this home.\n\tAbove a derelict cradle you see a small celing {fan}.")
 	else:
-		print(f"Seeing strewn toys and clothing about; you must be in the room that was once for the children of this home.")
+		print(f"\nSeeing strewn toys and clothing about; you must be in the room that was once for the children of this home.")
 	while ui != "Menu":
 		ui = input(f"/// Inputs: 'North', 'East', 'South' 'Interact' ///\n").title()
 		if ui == "Menu":
@@ -300,10 +324,10 @@ def Roof():
 	global GooseVar
 	unit = Iti("unit")
 	if GooseVar == 0:
-		print(f"Opening the window, you step out onto the roof. From up here you can see a blazing, orange glow in the distance.\n\tAs you look at its fierce size, a herd of geese fly overhead. To your right is an old air-conditioning {unit} that may still work.")
+		print(f"\nOpening the window, you step out onto the roof. From up here you can see a blazing, orange glow in the distance.\n\tAs you look at its fierce size, a herd of geese fly overhead. To your right is an old air-conditioning {unit} that may still work.")
 		GooseVar = 1
 	elif UnitVar == 0:
-		print(f"Opening the window, you step out onto the roof. From up here you can see a blazing, orange glow in the distance.\n\tTo your right is an old air-conditioning {unit} that may still work.")
+		print(f"\nOpening the window, you step out onto the roof. From up here you can see a blazing, orange glow in the distance.\n\tTo your right is an old air-conditioning {unit} that may still work.")
 	else:
 		print(f"Opening the window, you step out onto the roof. From up here you can see a blazing, orange glow in the distance.")
 	while ui != "Menu":
@@ -319,7 +343,7 @@ def Roof():
 				if UnitVar == 0:
 					if "Shiv" in inventory:
 						print(f"\nYou cut out the air-conditioning unit to use as a makeshift air filter.\n")
-						print(f"+ Cooler\n")
+						print(f"+ Air Filter\n")
 						inventory.append(f"Air Filter")
 						CarObjevInven.remove(f"Air Filter")
 						UnitVar = 1
@@ -336,7 +360,7 @@ def Roof():
 
 def UpHall():
 	ui = ""
-	print(f"You enter the hallway connecting two bedrooms and a staircase. You see a wanning crescent glisten through the dilapidated roof.")
+	print(f"\nYou enter the hallway connecting two bedrooms and a staircase. You see a wanning crescent glisten through the dilapidated roof.")
 	while ui != "Menu":
 		ui = input(f"/// Inputs: 'West', 'Down' ///\n").title()
 		if ui == "Menu":
@@ -352,7 +376,7 @@ def UpHall():
 
 def LivingRoom():
 	ui = ""
-	print(f"Your movement silently rocks a thin wooden chair in front of an old television set. The rug of this living room is moldy in wet.")
+	print(f"\nYour movement silently rocks a thin wooden chair in front of an old television set. The rug of this living room is moldy in wet.")
 	while ui != "Menu":
 		ui = input(f"/// Inputs: 'East', 'West', 'Up', 'Down' ///\n").title()
 		if ui == "Menu":
@@ -372,7 +396,7 @@ def LivingRoom():
 
 def DiningRoom():
 	ui = ""
-	print(f"A low light lamp lights the family table. China and cutlery are littered on the floor.")
+	print(f"\nA low light lamp lights the family table. China and cutlery are littered on the floor.")
 	while ui != "Menu":
 		ui = input(f"/// Inputs: 'North', 'East', 'South' ///\n").title()
 		if ui == "Menu":
@@ -401,9 +425,9 @@ def Kitchen():
 	lightbulb = Iti("lightbulb")
 	chair = Iti("chair")
 	if LightbulbVar == 1:
-		print(f"Walking on the checkerboard floor you see a disheveled, looted kitchen. Any trace of food is simply gone.")
+		print(f"\nWalking on the checkerboard floor you see a disheveled, looted kitchen. Any trace of food is simply gone.")
 	elif ChairVar == 1:
-		print(f"Walking on the checkerboard floor you see a disheveled, looted kitchen. Any trace of food is simply gone.\n\tThough you do see a flickering {lightbulb} above a now right-side up chair.")
+		print(f"\nWalking on the checkerboard floor you see a disheveled, looted kitchen. Any trace of food is simply gone.\n\tThough you do see a flickering {lightbulb} above a now right-side up chair.")
 	else:
 		print(f"Walking on the checkerboard floor you see a disheveled, looted kitchen. Any trace of food is simply gone.\n\tThough you do see a flickering {lightbulb} above an overturned {chair}.")
 	while ui != "Menu":
@@ -447,9 +471,9 @@ def DownHall():
 	ui = ""
 	blade = Iti(f"blade")
 	if BladeVar == 0:
-		print(f"You pass by frames of photos of bygone children; through the home's backdoor you see the moon-lit yard.\n\tOn the ground you see some sort of {blade}.")
+		print(f"\nYou pass by frames of photos of bygone children; through the home's backdoor you see the moon-lit yard.\n\tOn the ground you see some sort of {blade}.")
 	else:
-		print(f"You pass by frames of photos of bygone children; through the home's backdoor you see the moon-lit yard.")
+		print(f"\nYou pass by frames of photos of bygone children; through the home's backdoor you see the moon-lit yard.")
 	while ui != "Menu":
 		ui = input(f"/// Inputs: 'North', 'West', 'South', 'Interact' ///\n").title()
 		if ui == "Menu":
@@ -488,7 +512,7 @@ def Garage():
 	ui = ""
 	global ToolboxVar
 	toolbox = Iti("toolbox")
-	print(f"Perhaps the only room that appears like its pre-war self; the garage is where your nearly handmade 'car'\nis dimly light as well as a {toolbox} by a single bulb.")
+	print(f"\nPerhaps the only room that appears like its pre-war self; the garage is where your nearly handmade 'car'\n\tis dimly light as well as a {toolbox} by a single bulb.")
 	while ui != "Menu":
 		ui = input(f"/// Inputs: 'West', 'Interact', 'Car' ///\n").title()
 		if ui == "Menu":
@@ -530,7 +554,7 @@ def Cellar():
 	global FanShellVar
 	ui = ""
 	crates = Iti("crates")
-	print(f"You walk down into the cellar; all is silent but the cyclic dripping from somewhere.\n\tThere are a few {crates} that look un-opened.")
+	print(f"\nYou walk down into the cellar; all is silent but the cyclic dripping from somewhere.\n\tThere are a few {crates} that look un-opened.")
 	while ui != "Menu":
 		ui = input(f"/// Inputs: 'East', 'Up', 'Interact' ///\n").title()
 		if ui == "Menu":
@@ -545,6 +569,7 @@ def Cellar():
 			if ui == "Crates":
 				if FanShellVar == 0:
 					print(f"\nOpening the crates, you unfortunately don't see much of importance but a fan shell with no blades.\n")
+					print(f"+ Fan Shell\n")
 					inventory.append(f"Fan Shell")
 					FanShellVar = 1
 					if "Fan Blades" in inventory:
@@ -568,9 +593,9 @@ def DeepCellar():
 	pipe = Iti("pipe")
 	if "Charged Flashlight" in inventory:
 		if PipeVar == 0:
-			print(f"Now able to see with your flashlight, you can see the source of the dripping sound: a leaky {pipe}.\n\tThere's also overgrown cobwebs, and long-forgotten boxes.")
+			print(f"\nNow able to see with your flashlight, you can see the source of the dripping sound: a leaky {pipe}.\n\tThere's also overgrown cobwebs, and long-forgotten boxes.")
 		else:
-			print(f"Here in the deep cellar, you see the remains of the leaky pipe you cut, some cobwebs, and old boxes.")
+			print(f"\nHere in the deep cellar, you see the remains of the leaky pipe you cut, some cobwebs, and old boxes.")
 		while ui != "Menu":
 			ui = input(f"/// Inputs: 'West', 'Interact' ///\n").title()
 			if ui == "Menu":
@@ -579,7 +604,7 @@ def DeepCellar():
 			elif ui == "West":
 				Cellar()
 			elif ui == "Interact":
-				ui = input(f"/// What do you interact with? ///\n").title()
+				ui = input(f"\t/// What do you interact with? ///\n").title()
 				if ui == "Pipe":
 					if PipeVar == 0:
 						if "Shiv" in inventory:
@@ -599,12 +624,12 @@ def DeepCellar():
 				DeepCellar()
 	else:
 		print(f"\nThis part of the cellar is so far from the staircase that visibility is naught, you need some sort of tool to aid your eyes to proceed.")
-		print(f"Returning east to the lit part of the cellar.\n")
+		print(f"\tReturning west to the lit part of the cellar.")
 		Cellar()
 
 def Backyard():
 	ui= ""
-	print(f"Exiting the house you feel the early morning dew brush against your boots.\n\tThere's a small table with a chessboard but no chairs; there are only black pawns on squares h7, g6, f7, e7, and d6.\n\t\tWhen you try to move the pieces they solidly stay put.")
+	print(f"\nExiting the house you feel the early morning dew brush against your boots.\n\tThere's a small table with a chessboard but no chairs; there are only black pawns on squares h7, g6, f7, e7, and d6.\n\t\tWhen you try to move the pieces they solidly stay put.")
 	while ui != "Menu":
 		ui = input(f"/// Inputs: 'South' ///\n").title()
 		if ui == "Menu":
@@ -620,9 +645,9 @@ def Frontyard():
 	global FrontyardVar
 	ui = ""
 	if FrontyardVar == 0:
-		print(f"As you open the front door, leaving the home, a faraway explosion is heard followed by more screams.\n\tYou should leave soon.")
+		print(f"\nAs you open the front door, leaving the home, a faraway explosion is heard followed by more screams.\n\tYou should leave soon.")
 	else:
-		print(f"You walk by the gray picket fences in front of the house.")
+		print(f"\nYou walk by the gray picket fences in front of the house.")
 	while ui != "Menu":
 		ui = input(f"/// Inputs: 'North', 'East', 'West' ///\n").title()
 		if ui == "Menu":
@@ -646,9 +671,9 @@ def FrontyardEast():
 	ui = ""
 	sticks = Iti(f"sticks")
 	if StickVar == 0:
-		print(f"You walk farther east from the house, not much is here but a pile of {sticks} and a lone red baneberry.")
+		print(f"\nYou walk farther east from the house, not much is here but a pile of {sticks} and a lone red baneberry.")
 	else:
-		print(f"You walk farther east from the house, not much is here but a lonesome red baneberry.")
+		print(f"\nYou walk farther east from the house, not much is here but a lonesome red baneberry.")
 	while ui != "Menu":
 		ui = input(f"/// Inputs: 'West', 'Interact' ///\n").title()
 		if ui == "Menu":
@@ -665,7 +690,7 @@ def FrontyardEast():
 					inventory.append(f"Stick")
 					StickVar = 1
 					if "Blade" in inventory:
-						print(f"Now; with your blade from earlier, you craft a shiv.")
+						print(f"\nNow; with your blade from earlier, you craft a shiv.")
 						print(f"+ Shiv\n- Stick\n- Blade")
 						inventory.append(f"Shiv")
 						inventory.remove(f"Blade")
@@ -683,9 +708,9 @@ def FrontyardWest():
 	global HoseVar
 	hose = Iti(f"hose")
 	if HoseVar == 0:
-		print(f"You walk a little farther west of the house and see a dark green garden {hose} attached to it by a large vine overtaking the wall.")
+		print(f"\nYou walk a little farther west of the house and see a dark green garden {hose} attached to it by a large vine overtaking the wall.")
 	else:
-		print(f"You walk a little farther west of the house and see a large vine overtaking the wall.")
+		print(f"\nYou walk a little farther west of the house and see a large vine overtaking the wall.")
 	while ui != "Menu":
 		ui = input(f"/// Inputs: 'East', 'Interact' ///\n").title()
 		if ui == "Menu":
@@ -712,13 +737,6 @@ def FrontyardWest():
 		else:
 			print(f"\nInput not recognized; try again.\n")
 			FrontyardWest()
-
-def filecheck():
-	#this function checks if a previous game file is loadable, aids Player() class
-	try:
-		load()
-	except FileNotFoundError:
-		pass
 
 Player()
 StartVar = 1
