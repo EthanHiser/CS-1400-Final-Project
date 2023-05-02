@@ -1,10 +1,5 @@
 import pickle
 #main file for text-based game
-class Player():
-#Class to determine player's name and initialize program
-	def __init__(self):
-		self.name = input(f"GAME BEGUN.\nWhat is your name?\n").title()
-		print(f"{self.name} begins a maybe-not-so-epic quest!\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.\n")
 
 #multiple variables that will be called, saved, and loaded.
 CarObjevInven = ["Cooling Fan", "Hose", "Air Filter", "Exhaust Pipe", "Light Bulb"]
@@ -25,6 +20,31 @@ FanVar = 0
 UnitVar = 0
 FanShellVar = 0
 GooseVar = 0
+StartVar = 0
+
+class Player():
+#Class to determine player's name and initialize program/resume previous file
+	def __init__(self):
+		ui = ""
+		ui = input(f"PROGRAM BEGUN. \nWould you like to 'Resume' a game or start a 'New' game?\n").title()
+		if ui == "New":
+			if StartVar == 0:
+				self.name = input(f"\nGAME BEGUN.\nWhat is your name?\n").title()
+				print(f"\n{self.name} begins a maybe-not-so-epic quest!\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.\n")
+			else:
+				print(f"\nGAME RESUMED. \nReturning to your maybe-not-so epic quest, your progress has been saved! You will renew in the master bedroom.\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.\n")
+		elif ui == "Resume":
+			filecheck()
+			if StartVar == 0:
+				print(f"\nNo previous game file found, starting new game.\n")
+				self.name = input(f"GAME BEGUN.\nWhat is your name?\n").title()
+				print(f"{self.name} begins a maybe-not-so-epic quest!\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.\n")
+			else:
+				load()
+				print(f"\nGAME RESUMED. \nReturning to your maybe-not-so epic quest, your progress has been saved! You will renew in the master bedroom.\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.\n")
+		else:
+			print(f"\nInput unkown; type either 'New' or 'Resume'.\n")
+			Player()
 
 class Menu(Player):
 #Class that will be called multiple times to allow player many commands
@@ -38,8 +58,11 @@ class Menu(Player):
 				save()
 				print(f"\nGame Saved!")
 			elif ui == "L":
-				load()
-				print(f"\nGame Loaded!")
+				try:
+					load()
+					print(f"\nGame Loaded!")
+				except FileNotFoundError:
+					print(f"\nGame file not found!")
 			elif ui == "R":
 				print()
 			elif ui == "Q":
@@ -58,11 +81,10 @@ class Menu(Player):
 				Menu()
 
 class Car():
-#Class for the primary game objective (fixing and leaving through car)
+#Class for the primary game objective (fixing and leaving through car) and ending the game.
 	def __init__(self):
 		global CarVar
 		ui = ""
-		CarObjevInven = []
 		if CarObjevInven == []:
 			print(f"\n ||| Now, with all the required car parts, you are able to successfully start the engine of your vehicle.\n\tDriving out of the garage you see an illuminated sign that indicates an upcoming offshoot. ||| \n")
 			while ui != "Main":
@@ -71,10 +93,10 @@ class Car():
 					print(f"\nDriving continuouly down the main path, you are able to leave the home's property a final time.\n\tHopefuly this world has intentions in your favor...\n\n ||| Thanks for playing! Goodbye. |||\n")
 					quit()
 				elif ui == "Offshoot":
-					print(f"\nLeaving the main path, and taking the offshoot, you drive down an unpaved road until you see a small shack.\n\tUpon entering you see nothing but a large, metal door and a keypad.\n")
-					while ui != "1218":
+					print(f"\nLeaving the main path, and taking the offshoot, you drive down an unpaved road until you see a small shack.\n\tUpon entering you see nothing but a large, metal door and a keypad taking numbers that correlate with letters h, g, f, e and d in that order.\n")
+					while ui != "76776":
 						ui = input(f"/// What is the code? ///\n").title()
-						if ui == "1218":
+						if ui == "76776":
 							print(f"\nThe metal door loudly opens revealing a single, white LED light.\n\tEntering the small room the door closes behind you and the room shakes downward.\n\t\tThe door opens again revealing an open earth cave.")
 							print(f"\t\t\tNestled in the stalagmites you see a grand vault door and labeled above it a quote:\n\t\t\t\t\"Qui quasi anas sonant, sunt qui supersunt.\"\n")
 							print(f"||| Thanks for playing! goodbye. |||\n")
@@ -89,7 +111,7 @@ class Car():
 					print(f"\nInput not recognized or not valid right now.\n")
 			quit()
 		if CarVar == 0:
-			print(f"\nYou get get into your somber excuse of a 'car' and start the engine.\n\tUpon starting it though the vehicle sputters into silence. Opening the hood you realize its cooling fan is gone;\n\t\tin fact, the hoses, exhuast, air filter, and lights are gone. You've been robbed.\n")
+			print(f"\nYou get get into your somber excuse of a 'car' and start the engine.\n\tUpon starting it though the vehicle sputters into silence. Opening the hood you realize its cooling fan is gone;\n\t\tin fact, the hoses, exhaust, air filter, and lights are gone. You've been robbed.\n")
 			print(f"\t/// Objective: Get {CarObjevInven} ///\n")
 			CarVar = 1
 		else:
@@ -104,6 +126,7 @@ def Iti(word):
 
 def save():
 	with open("data.pkl", "wb") as f:
+		pickle.dump(StartVar, f)
 		pickle.dump(CarObjevInven, f)
 		pickle.dump(inventory, f)
 		pickle.dump(BedroomVar, f)
@@ -122,9 +145,11 @@ def save():
 		pickle.dump(UnitVar, f)
 		pickle.dump(FanShellVar, f)
 		pickle.dump(GooseVar, f)
+
 def load():
-	global CarObjevInven, inventory, BedroomVar, FrontyardVar, DresserVar, MirrorVar, ToolboxVar, CarVar, ChairVar, LightbulbVar, HoseVar, PipeVar, StickVar, BladeVar, FanVar, UnitVar, FanShellVar, GooseVar
+	global StartVar, CarObjevInven, inventory, BedroomVar, FrontyardVar, DresserVar, MirrorVar, ToolboxVar, CarVar, ChairVar, LightbulbVar, HoseVar, PipeVar, StickVar, BladeVar, FanVar, UnitVar, FanShellVar, GooseVar
 	with open("data.pkl", "rb") as f:
+		StartVar = pickle.load(f)
 		CarObjevInven = pickle.load(f)
 		inventory = pickle.load(f)
 		BedroomVar = pickle.load(f)
@@ -142,8 +167,9 @@ def load():
 		FanVar = pickle.load(f)
 		UnitVar = pickle.load(f)
 		FanShellVar = pickle.load(f)
+		GooseVar = pickle.load(f)
 
-	return CarObjevInven, inventory, BedroomVar, FrontyardVar, DresserVar, MirrorVar, ToolboxVar, CarVar, ChairVar, LightbulbVar, HoseVar, PipeVar, StickVar, BladeVar, FanVar, UnitVar, FanShellVar
+	return StartVar, CarObjevInven, inventory, BedroomVar, FrontyardVar, DresserVar, MirrorVar, ToolboxVar, CarVar, ChairVar, LightbulbVar, HoseVar, PipeVar, StickVar, BladeVar, FanVar, UnitVar, FanShellVar, GooseVar
 
 ###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---
 
@@ -563,7 +589,7 @@ def DeepCellar():
 							CarObjevInven.remove(f"Exhaust Pipe")
 							PipeVar = 1
 						else:
-							print(f"\nLooking at the pipe, you realize it's the perfect size for your car, but you need something strong to remove it\n")
+							print(f"\nLooking at the pipe, you realize it's the perfect size for your car, but you need something strong to remove it.\n")
 					else:
 						print(f"\nYou can't interact with the pipe again, as it is gone. :(\n")
 				else:
@@ -578,7 +604,7 @@ def DeepCellar():
 
 def Backyard():
 	ui= ""
-	print(f"Exiting the house you feel the early morning dew brush against your boots.")
+	print(f"Exiting the house you feel the early morning dew brush against your boots.\n\tThere's a small table with a chessboard but no chairs; there are only black pawns on squares h7, g6, f7, e7, and d6.\n\t\tWhen you try to move the pieces they solidly stay put.")
 	while ui != "Menu":
 		ui = input(f"/// Inputs: 'South' ///\n").title()
 		if ui == "Menu":
@@ -672,7 +698,7 @@ def FrontyardWest():
 			if ui == "Hose":
 				if HoseVar == 0:
 					if "Bobby Pins" in inventory:
-						print(f"\nUsing your bobby pins you pick the padlock chaining the hose\n")
+						print(f"\nUsing your bobby pins you pick the padlock chaining the hose.\n")
 						print(f"+ Hose\n")
 						inventory.append(f"Hose")
 						CarObjevInven.remove(f"Hose")
@@ -687,5 +713,13 @@ def FrontyardWest():
 			print(f"\nInput not recognized; try again.\n")
 			FrontyardWest()
 
+def filecheck():
+	#this function checks if a previous game file is loadable, aids Player() class
+	try:
+		load()
+	except FileNotFoundError:
+		pass
+
 Player()
+StartVar = 1
 Bedroom()
