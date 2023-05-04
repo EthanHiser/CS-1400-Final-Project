@@ -1,4 +1,5 @@
 import pickle
+import time,sys
 #main file for text-based game
 
 #multiple variables that will be called, saved, and loaded.
@@ -34,7 +35,7 @@ class Player():
 				print(f"---===---===---===---===---===---===---===---\n")
 			else:
 				print(f"\nGAME RESUMED. \nReturning to your maybe-not-so epic quest, your progress has been saved! You will renew in the master bedroom.\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.\n")
-				print(f"---===---===---===---===---===---===---===---\n")
+				print(f"---===---===---===---===---===---===---===---")
 		elif ui == "Resume":
 			filecheck()
 			if StartVar == 0:
@@ -47,7 +48,7 @@ class Player():
 				print(f"\nGAME RESUMED. \nReturning to your maybe-not-so epic quest, your progress has been saved! You will renew in the master bedroom.\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.\n")
 				print(f"---===---===---===---===---===---===---===---\n")
 		else:
-			print(f"\nInput unkown; type either 'New' or 'Resume'.\n")
+			print(f"\nInput not recognized; type either 'New' or 'Resume'.\n")
 			Player()
 
 class Menu(Player):
@@ -99,39 +100,55 @@ class Car():
 		global CarVar
 		ui = ""
 		if CarObjevInven == []:
-			print(f"\n ||| Now, with all the required car parts, you are able to successfully start the engine of your vehicle.\n\tDriving out of the garage you see an illuminated sign that indicates an upcoming offshoot. ||| \n")
+			typingPrint(f"\n ||| Now, with all the required car parts, you are able to successfully start the engine of your vehicle.\n\tDriving out of the garage you see an illuminated sign that indicates an upcoming offshoot. ||| \n")
 			while ui != "Main":
-				ui = input(f"\t/// Do you take the 'main' path or the 'offshoot'? ///\n").title()
+				ui = typingInput(f"\n\t/// Do you take the 'main' path or the 'offshoot'? ///\n").title()
 				if ui == "Main":
-					print(f"\nDriving continuouly down the main path, you are able to leave the home's property a final time.\n\tHopefuly this world has intentions in your favor...\n\n ||| Thanks for playing! Goodbye. |||\n")
-					print(f"---===---===---===---===---===---===---===---\n")
+					typingPrint(f"\nDriving continuouly down the main path, you are able to leave the home's property a final time.\n\tHopefuly this world has intentions in your favor...\n\n ||| Thanks for playing! Goodbye. |||\n")
+					typingPrint(f"---===---===---===---===---===---===---===---\n")
 					quit()
 				elif ui == "Offshoot":
-					print(f"\nLeaving the main path, and taking the offshoot, you drive down an unpaved road until you see a small shack.\n\tUpon entering you see nothing but a large, metal door and a keypad taking numbers that correlate with letters h, g, f, e and d in that order.\n")
+					typingPrint(f"\nLeaving the main path, and taking the offshoot, you drive down an unpaved road until you see a small shack.\n\tUpon entering you see nothing but a large, metal door and a keypad taking numbers that correlate with letters h, g, f, e and d in that order.\n")
 					while ui != "76776":
-						ui = input(f"/// What is the code? ///\n").title()
+						ui = typingInput(f"/// What is the code? ///\n").title()
 						if ui == "76776":
-							print(f"\nThe metal door loudly opens revealing a single, white LED light.\n\tEntering the small room the door closes behind you and the room shakes downward.\n\t\tThe door opens again revealing an open earth cave.")
-							print(f"\t\t\tNestled in the stalagmites you see a grand vault door and labeled above it a quote:\n\t\t\t\t\"Qui quasi anas sonant, sunt qui supersunt.\"\n")
-							print(f"||| Thanks for playing! goodbye. |||\n")
-							print(f"---===---===---===---===---===---===---===---\n")
+							typingPrint(f"\nThe metal door loudly opens revealing a single, white LED light.\n\tEntering the small room the door closes behind you and the room shakes downward.\n\t\tThe door opens again revealing an open earth cave.\n")
+							typingPrint(f"\t\t\tNestled in the stalagmites you see a grand vault door and labeled above it a quote:\n\t\t\t\t\"Qui quasi anas sonant, sunt qui supersunt.\"\n")
+							typingPrint(f"||| Thanks for playing! goodbye. |||\n")
+							typingPrint(f"---===---===---===---===---===---===---===---\n")
 							quit()
 						elif ui == "Exit":
-							print(f"\nFaling to know the code, you exit the shack and drive down the pathway.\n\tHopefuly this world has intenions in your favor...\n\n\t ||| Thanks for playing! Goodbye. |||\n")
-							print(f"---===---===---===---===---===---===---===---\n")
+							typingPrint(f"\nFailing to know the code, you exit the shack and drive down the pathway.\n\tHopefuly this world has intenions in your favor...\n\n\t ||| Thanks for playing! Goodbye. |||\n")
+							typingPrint(f"---===---===---===---===---===---===---===---\n")
 							quit()
 						else:
-							print(f"\nThat was not the code, input 'Exit' to leave the shack.\n")
+							typingPrint(f"\nThat was not the code, typingInput 'Exit' to leave the shack.\n")
 						
 				else:
-					print(f"\nInput not recognized or not valid right now.\n")
+					typingPrint(f"\nInput not recognized or not valid right now.\n")
 			quit()
 		if CarVar == 0:
-			print(f"\nYou get get into your somber excuse of a 'car' and start the engine.\n\tUpon starting it though the vehicle sputters into silence. Opening the hood you realize its cooling fan is gone;\n\t\tin fact, the hoses, exhaust, air filter, and lights are gone. You've been robbed.\n")
-			print(f"\t/// Objective: Get {CarObjevInven} ///\n")
+			typingPrint(f"\nYou get get into your somber excuse of a 'car' and start the engine.\n\tUpon starting it though the vehicle sputters into silence. Opening the hood you realize its cooling fan is gone;\n\t\tin fact, the hoses, exhaust, air filter, and lights are gone. You've been robbed.\n")
+			typingPrint(f"\t/// Objective: Get {CarObjevInven} ///\n")
 			CarVar = 1
 		else:
-			print(f"\n\t/// Objective: Get {CarObjevInven} ///\n")
+			typingPrint(f"\n\t/// Objective: Get {CarObjevInven} ///\n")
+
+def typingPrint(text):
+#function to print words at a slower, more appealing speed
+	for character in text:
+		sys.stdout.write(character)
+		sys.stdout.flush()
+		time.sleep(0) #0.0315
+  
+def typingInput(text):
+#ditto of above function, but for input
+	for character in text:
+		sys.stdout.write(character)
+		sys.stdout.flush()
+		time.sleep(0)
+	value = input()
+	return value
 
 def Iti(word):
 #function to italicize words (things that are interactable)
@@ -205,11 +222,11 @@ def Bedroom():
 	dresser = Iti("dresser")
 	ui = ""
 	if BedroomVar == 0:
-		print(f"Screams of the distance awaken you from your short lived slumber, and thus your stay here.\n\tYou sit up and out of the creaking bed, grab your rifle off the {dresser}, begin to head to the garage.")
+		typingPrint(f"Screams of the distance awaken you from your short lived slumber, and thus your stay here.\n\tYou sit up and out of the creaking bed, grab your rifle off the {dresser}, begin to head to the garage.\n")
 	else:
-		print(f"\nYou re-enter the master bedroom; not much is here besides a {dresser} and bedframe.")
+		typingPrint(f"\nYou re-enter the master bedroom; not much is here besides a {dresser} and bedframe.\n")
 	while ui != "Menu":
-		ui = input(f"/// Inputs: 'East', 'West', 'South', 'Interact' ///\n").title()
+		ui = typingInput(f"/// Inputs: 'East', 'West', 'South', 'Interact' ///\n").title()
 		if ui == "Menu":
 			Menu()
 			Bedroom()
@@ -223,55 +240,55 @@ def Bedroom():
 			BedroomVar = 1
 			Bathroom()
 		elif ui == "Interact":
-			ui = input(f"\t/// What do you interact with? ///\n").title()
+			ui = typingInput(f"\t/// What do you interact with? ///\n").title()
 			if ui == "Dresser":
 				if DresserVar == 0:
-					print(f"\nYou open the dresser and find an old flashlight, but upon clicking it you find it has no batteries.\n")
-					print(f"+ Flashlight!\n")
+					typingPrint(f"\nYou open the dresser and find an old flashlight, but upon clicking it you find it has no batteries.\n")
+					typingPrint(f"\n+ Flashlight!\n\n")
 					inventory.append("Dead Flashlight")
 					DresserVar = 1
 					if "Batteries" in inventory:
-						print(f"You place your batteries from the toolbox into the flashlight; making them useful once more.\n")
-						print(f"+ Charged Flashlight!\n- Dead Flashlight!\n- Batteries!\n")
+						typingPrint(f"\nYou place your batteries from the toolbox into the flashlight; making them useful once more.\n")
+						typingPrint(f"\n+ Charged Flashlight!\n- Dead Flashlight!\n- Batteries!\n")
 						inventory.append(f"Charged Flashlight")
 						inventory.remove(f"Dead Flashlight")
 						inventory.remove(f"Batteries")
 				else:
-					print(f"\nYou open the dresser again and find nothing of interest.\n")
+					typingPrint(f"\nYou open the dresser again and find nothing of interest.\n")
 			else:
-				print(f"\nInput either not recognized or not valid right now.\n")
+				typingPrint(f"\nInput either not recognized or not valid right now.\n\n")
 				Bedroom()
 		else:
-			print(f"\nInput not recognized; try again.\n")
+			typingPrint(f"\nInput not recognized; try again.\n")
 			Bedroom()
 
 def Bathroom():
 	ui = ""
 	global MirrorVar
 	mirror = Iti("mirror")
-	print(f"\nYou enter the master bedroom's bathroom. In it, cracked {mirror} and stained walls.")
+	typingPrint(f"\nYou enter the master bedroom's bathroom. In it, cracked {mirror} and stained walls.\n")
 	while ui != "Menu":
-		ui = input(f"/// Inputs: 'East', 'Interact' ///\n").title()
+		ui = typingInput(f"/// Inputs: 'East', 'Interact' ///\n").title()
 		if ui == "Menu":
 			Menu()
 			Bathroom()
 		elif ui == "East":
 			Bedroom()
 		elif ui == "Interact":
-			ui = input(f"\t/// What do you interact with? ///\n").title()
+			ui = typingInput(f"\t/// What do you interact with? ///\n").title()
 			if ui == "Mirror":
 				if MirrorVar == 0:
-					print(f"\nYou open the damaged mirror and pull out a few bobby pins.\n")
-					print(f"+ Bobby Pins\n")
+					typingPrint(f"\nYou open the damaged mirror and pull out a few bobby pins.\n")
+					typingPrint(f"\n+ Bobby Pins\n\n")
 					inventory.append(f"Bobby Pins")
 					MirrorVar = 1
 				else:
-					print(f"\nYou re-open the bathroom mirror but find only forgotten medicine bottles.\n")
+					typingPrint(f"\nYou re-open the bathroom mirror but find only forgotten medicine bottles.\n")
 			else:
-				print(f"\nInput not recognized or not valid right now.\n")
+				typingPrint(f"\nInput not recognized or not valid right now.\n")
 				Bathroom()
 		else:
-			print(f"\nInput not recognized; try again.\n")
+			typingPrint(f"\nInput not recognized; try again.\n")
 			Bathroom()
 
 def KidsRoom():
@@ -279,11 +296,11 @@ def KidsRoom():
 	global FanVar
 	fan = Iti("fan")
 	if FanVar == 0:
-		print(f"\nSeeing strewn toys and clothing about; you must be in the room that was once for the children of this home.\n\tAbove a derelict cradle you see a small celing {fan}.")
+		typingPrint(f"\nSeeing strewn toys and clothing about; you must be in the room that was once for the children of this home.\n\tAbove a derelict cradle you see a small celing {fan}.\n")
 	else:
-		print(f"\nSeeing strewn toys and clothing about; you must be in the room that was once for the children of this home.")
+		typingPrint(f"\nSeeing strewn toys and clothing about; you must be in the room that was once for the children of this home.\n")
 	while ui != "Menu":
-		ui = input(f"/// Inputs: 'North', 'East', 'South' 'Interact' ///\n").title()
+		ui = typingInput(f"/// Inputs: 'North', 'East', 'South' 'Interact' ///\n").title()
 		if ui == "Menu":
 			Menu()
 			KidsRoom()
@@ -294,29 +311,29 @@ def KidsRoom():
 		elif ui == "South":
 			Roof()
 		elif ui == "Interact":
-			ui = input(f"\t/// What do you interact with? ///\n").title()
+			ui = typingInput(f"\t/// What do you interact with? ///\n").title()
 			if ui == "Fan":
 				if FanVar == 0:
-					print(f"\nYou rip the fan off the ceiling, dust and a cockroach fall to the floor.\n")
-					print(f"+ Fan Blades\n")
+					typingPrint(f"\nYou rip the fan off the ceiling, dust and a cockroach fall to the floor.\n")
+					typingPrint(f"\n+ Fan Blades\n")
 					inventory.append(f"Fan Blades")
 					FanVar = 1
 					if "Fan Shell" in inventory:
-						print(f"Using the fan shell from the cellar, you are able to make a portable cooler.\n")
-						print(f"+ Cooler\n")
+						typingPrint(f"\nUsing the fan shell from the cellar, you are able to make a portable cooler.\n")
+						typingPrint(f"\n+ Cooler\n")
 						inventory.append(f"Cooler")
 						inventory.remove(f"Fan Blades")
 						inventory.remove(f"Fan Shell")
 						CarObjevInven.remove(f"Cooling Fan")
 					else:
-						print(f"You could use these fan blades for something if you had a shell to hold them in.\n")
+						typingPrint(f"\nYou could use these fan blades for something if you had a shell to hold them in.\n\n")
 				else:
-					print(f"\nOne cannot simply interact with a ceiling fan that which has already been so.\n")
+					typingPrint(f"\nOne cannot simply interact with a ceiling fan that which has already been so.\n")
 			else:
-				print(f"\nInput not recognized or not valid right now.\n")
+				typingPrint(f"\nInput not recognized or not valid right now.\n")
 				KidsRoom()
 		else:
-			print(f"\nInput not recognized; try again.\n")
+			typingPrint(f"\nInput not recognized; try again.\n")
 			KidsRoom()
 
 def Roof():
@@ -325,45 +342,45 @@ def Roof():
 	global GooseVar
 	unit = Iti("unit")
 	if GooseVar == 0:
-		print(f"\nOpening the window, you step out onto the roof. From up here you can see a blazing, orange glow in the distance.\n\tAs you look at its fierce size, a herd of geese fly overhead. To your right is an old air-conditioning {unit} that may still work.")
+		typingPrint(f"\nOpening the window, you step out onto the roof. From up here you can see a blazing, orange glow in the distance.\n\tAs you look at its fierce size, a herd of geese fly overhead. To your right is an old air-conditioning {unit} that may still work.\n")
 		GooseVar = 1
 	elif UnitVar == 0:
-		print(f"\nOpening the window, you step out onto the roof. From up here you can see a blazing, orange glow in the distance.\n\tTo your right is an old air-conditioning {unit} that may still work.")
+		typingPrint(f"\nOpening the window, you step out onto the roof. From up here you can see a blazing, orange glow in the distance.\n\tTo your right is an old air-conditioning {unit} that may still work.\n")
 	else:
-		print(f"Opening the window, you step out onto the roof. From up here you can see a blazing, orange glow in the distance.")
+		typingPrint(f"Opening the window, you step out onto the roof. From up here you can see a blazing, orange glow in the distance.\n")
 	while ui != "Menu":
-		ui = input(f"/// Inputs: 'North', 'Interact' ///\n").title()
+		ui = typingInput(f"/// Inputs: 'North', 'Interact' ///\n").title()
 		if ui == "Menu":
 			Menu()
 			Roof()
 		elif ui == "North":
 			KidsRoom()
 		elif ui == "Interact":
-			ui = input(f"\t/// What do you interact with? ///\n").title()
+			ui = typingInput(f"\t/// What do you interact with? ///\n").title()
 			if ui == "Unit":
 				if UnitVar == 0:
 					if "Shiv" in inventory:
-						print(f"\nYou cut out the air-conditioning unit to use as a makeshift air filter.\n")
-						print(f"+ Air Filter\n")
+						typingPrint(f"\nYou cut out the air-conditioning unit to use as a makeshift air filter.\n")
+						typingPrint(f"\n+ Air Filter\n")
 						inventory.append(f"Air Filter")
 						CarObjevInven.remove(f"Air Filter")
 						UnitVar = 1
 					else:
-						print(f"\nYou think that you could probaly put this cooler to good use if you could only extract it.\n")
+						typingPrint(f"\nYou think that you could probaly put this cooler to good use if you could only extract it.\n\n")
 				else:
-					print(f"Since you've already extracted the AC, ya just can't 'gain.")
+					typingPrint(f"\nSince you've already extracted the AC, ya just can't 'gain.\n")
 			else:
-				print(f"\nInput not recognized or not valid right now.\n")
+				typingPrint(f"\nInput not recognized or not valid right now.\n")
 				Roof()
 		else:
-			print(f"\nInput not recognized; try again.\n")
+			typingPrint(f"\nInput not recognized; try again.\n")
 			Roof()
 
 def UpHall():
 	ui = ""
-	print(f"\nYou enter the hallway connecting two bedrooms and a staircase. You see a wanning crescent glisten through the dilapidated roof.")
+	typingPrint(f"\nYou enter the hallway connecting two bedrooms and a staircase. You see a wanning crescent glisten through the dilapidated roof.\n")
 	while ui != "Menu":
-		ui = input(f"/// Inputs: 'West', 'Down' ///\n").title()
+		ui = typingInput(f"/// Inputs: 'West', 'Down' ///\n").title()
 		if ui == "Menu":
 			Menu()
 			UpHall()
@@ -372,14 +389,14 @@ def UpHall():
 		elif ui == "Down":
 			LivingRoom()
 		else:
-			print(f"\nInput not recognized; try again.\n")
+			typingPrint(f"\nInput not recognized; try again.\n")
 			UpHall()
 
 def LivingRoom():
 	ui = ""
-	print(f"\nYour movement silently rocks a thin wooden chair in front of an old television set. The rug of this living room is moldy in wet.")
+	typingPrint(f"\nYour movement silently rocks a thin wooden chair in front of an old television set. The rug of this living room is moldy in wet.\n")
 	while ui != "Menu":
-		ui = input(f"/// Inputs: 'East', 'West', 'Up', 'Down' ///\n").title()
+		ui = typingInput(f"/// Inputs: 'East', 'West', 'Up', 'Down' ///\n").title()
 		if ui == "Menu":
 			Menu()
 			LivingRoom()
@@ -392,31 +409,31 @@ def LivingRoom():
 		elif ui == "Down":
 			Cellar()
 		else:
-			print(f"\nInput not recognized; try again.\n")
+			typingPrint(f"\nInput not recognized; try again.\n")
 			LivingRoom()
 
 def DiningRoom():
 	ui = ""
-	print(f"\nA low light lamp lights the family table. China and cutlery are littered on the floor.")
+	typingPrint(f"\nA low light lamp lights the family table. China and cutlery are littered on the floor.\n")
 	while ui != "Menu":
-		ui = input(f"/// Inputs: 'North', 'East', 'South' ///\n").title()
+		ui = typingInput(f"/// Inputs: 'North', 'East', 'South' ///\n").title()
 		if ui == "Menu":
 			Menu()
 			DiningRoom()
 		elif ui == "North":
-			ui = input(f"\nWould you like to enter the 'Kitchen' or 'Hallway'?\n").title()
+			ui = typingInput(f"\nWould you like to enter the 'Kitchen' or 'Hallway'?\n").title()
 			if ui == "Kitchen":
 				Kitchen()
 			elif ui == "Hallway":
 				DownHall()
 			else:
-				print(f"\nInput not recognized; try again.\n")
+				typingPrint(f"\nInput not recognized; try again.\n")
 		elif ui == "East":
 			LivingRoom()
 		elif ui == "South":
 			Frontyard()
 		else:
-			print(f"\nInput not recognized; try again.\n")
+			typingPrint(f"\nInput not recognized; try again.\n")
 			DiningRoom()
 
 def Kitchen():
@@ -426,13 +443,13 @@ def Kitchen():
 	lightbulb = Iti("lightbulb")
 	chair = Iti("chair")
 	if LightbulbVar == 1:
-		print(f"\nWalking on the checkerboard floor you see a disheveled, looted kitchen. Any trace of food is simply gone.")
+		typingPrint(f"\nWalking on the checkerboard floor you see a disheveled, looted kitchen. Any trace of food is simply gone.\n")
 	elif ChairVar == 1:
-		print(f"\nWalking on the checkerboard floor you see a disheveled, looted kitchen. Any trace of food is simply gone.\n\tThough you do see a flickering {lightbulb} above a now right-side up chair.")
+		typingPrint(f"\nWalking on the checkerboard floor you see a disheveled, looted kitchen. Any trace of food is simply gone.\n\tThough you do see a flickering {lightbulb} above a now right-side up chair.\n")
 	else:
-		print(f"Walking on the checkerboard floor you see a disheveled, looted kitchen. Any trace of food is simply gone.\n\tThough you do see a flickering {lightbulb} above an overturned {chair}.")
+		typingPrint(f"Walking on the checkerboard floor you see a disheveled, looted kitchen. Any trace of food is simply gone.\n\tThough you do see a flickering {lightbulb} above an overturned {chair}.\n")
 	while ui != "Menu":
-		ui = input(f"/// Inputs: 'East', 'South', 'Interact' ///\n").title()
+		ui = typingInput(f"/// Inputs: 'East', 'South', 'Interact' ///\n").title()
 		if ui == "Menu":
 			Menu()
 			Kitchen()
@@ -441,30 +458,30 @@ def Kitchen():
 		elif ui == "South":
 			DiningRoom()
 		elif ui == "Interact":
-			ui = input(f"\t/// What do you interact with? ///\n").title()
+			ui = typingInput(f"\t/// What do you interact with? ///\n").title()
 			if ui == "Lightbulb":
 				if LightbulbVar == 0:
 					if ChairVar == 0:
-						print(f"\nYou attempt to unscrew the lightbulb on the ceiling, but just can't reach it.\n")
+						typingPrint(f"\nYou attempt to unscrew the lightbulb on the ceiling, but just can't reach it.\n")
 					else:
-						print(f"\nStanding on the chair, you unscrew the lightbulb and stash it.\n")
-						print(f"+ Light Bulb\n")
+						typingPrint(f"\nStanding on the chair, you unscrew the lightbulb and stash it.\n")
+						typingPrint(f"\n+ Light Bulb\n\n")
 						inventory.append(f"Light Bulb")
 						CarObjevInven.remove(f"Light Bulb")
 						LightbulbVar = 1
 				else:
-					print(f"\nHaving already removed the light bulb, you can no longer interact with it.\n")
+					typingPrint(f"\nHaving already removed the light bulb, you can no longer interact with it.\n")
 			elif ui == "Chair":
 				if ChairVar == 0:
-					print(f"\nYou turn the kitchen chair on the floor right-side up.\n")
+					typingPrint(f"\nYou turn the kitchen chair on the floor right-side up.\n")
 					ChairVar = 1
 				else:
-					print(f"\nHaving already turned up the chair, you can no longer interact with it.\n")
+					typingPrint(f"\nHaving already turned up the chair, you can no longer interact with it.\n")
 			else:
-				print(f"\nInput not recognized or not valid right now.\n")
+				typingPrint(f"\nInput not recognized or not valid right now.\n")
 				Kitchen()
 		else:
-			print(f"\nInput not recognized; try again.\n")
+			typingPrint(f"\nInput not recognized; try again.\n")
 			Kitchen()
 
 def DownHall():
@@ -472,11 +489,11 @@ def DownHall():
 	ui = ""
 	blade = Iti(f"blade")
 	if BladeVar == 0:
-		print(f"\nYou pass by frames of photos of bygone children; through the home's backdoor you see the moon-lit yard.\n\tOn the ground you see some sort of {blade}.")
+		typingPrint(f"\nYou pass by frames of photos of bygone children; through the home's backdoor you see the moon-lit yard.\n\tOn the ground you see some sort of {blade}.\n")
 	else:
-		print(f"\nYou pass by frames of photos of bygone children; through the home's backdoor you see the moon-lit yard.")
+		typingPrint(f"\nYou pass by frames of photos of bygone children; through the home's backdoor you see the moon-lit yard.\n")
 	while ui != "Menu":
-		ui = input(f"/// Inputs: 'North', 'West', 'South', 'Interact' ///\n").title()
+		ui = typingInput(f"/// Inputs: 'North', 'West', 'South', 'Interact' ///\n").title()
 		if ui == "Menu":
 			Menu()
 			DownHall()
@@ -487,35 +504,35 @@ def DownHall():
 		elif ui == "South":
 			DiningRoom()
 		elif ui == "Interact":
-			ui = input(f"\t/// What do you interact with? ///\n").title()
+			ui = typingInput(f"\t/// What do you interact with? ///\n").title()
 			if ui == "Blade":
 				if BladeVar == 0:
-					print(f"\nYou carefully pick up the gray, shining blade from the floor.\n")
-					print(f"+ Blade\n")
+					typingPrint(f"\nYou carefully pick up the gray, shining blade from the floor.\n")
+					typingPrint(f"\n+ Blade\n\n")
 					inventory.append(f"Blade")
 					BladeVar = 1
 					if "Stick" in inventory:
-						print(f"Now; with your stick from earlier, you craft a shiv.")
-						print(f"+ Shiv\n- Blade\n- Stick")
+						typingPrint(f"Now; with your stick from earlier, you craft a shiv.")
+						typingPrint(f"\n\n+ Shiv\n\n- Blade\n\n- Stick\n\n")
 						inventory.append(f"Shiv")
 						inventory.remove(f"Blade")
 						inventory.remove(f"Stick")
 				else:
-					print(f"\nHaving already picked up the blade, you cannot again.\n")
+					typingPrint(f"\nHaving already picked up the blade, you cannot again.\n")
 			else:
-				print(f"\nInput not recognized or not valid right now.\n")
+				typingPrint(f"\nInput not recognized or not valid right now.\n")
 				DownHall()
 		else:
-			print(f"\nInput not recognized; try again.\n")
+			typingPrint(f"\nInput not recognized; try again.\n")
 			DownHall()
 
 def Garage():
 	ui = ""
 	global ToolboxVar
 	toolbox = Iti("toolbox")
-	print(f"\nPerhaps the only room that appears like its pre-war self; the garage is where your nearly handmade 'car'\n\tis dimly light as well as a {toolbox} by a single bulb.")
+	typingPrint(f"\nPerhaps the only room that appears like its pre-war self; the garage is where your nearly handmade 'car'\n\tis dimly light as well as a {toolbox} by a single bulb.\n")
 	while ui != "Menu":
-		ui = input(f"/// Inputs: 'West', 'Interact', 'Car' ///\n").title()
+		ui = typingInput(f"/// Inputs: 'West', 'Interact', 'Car' ///\n").title()
 		if ui == "Menu":
 			Menu()
 			Garage()
@@ -525,39 +542,39 @@ def Garage():
 			Car()
 			Garage()
 		elif ui == "Interact":
-			ui = input(f"\t/// What do you interact with? ///\n").title()
+			ui = typingInput(f"\t/// What do you interact with? ///\n").title()
 			if ui == "Car":
 				Car()
 				Garage()
 			elif ui == "Toolbox":
 				if ToolboxVar == 0:
-					print(f"\nYou open the rusty red toolbox and find two old batteries.\n")
-					print(f"+ Batteries\n")
+					typingPrint(f"\nYou open the rusty red toolbox and find two old batteries.\n")
+					typingPrint(f"+ Batteries\n")
 					inventory.append(f"Batteries")
 					ToolboxVar = 1
 					if "Dead Flashlight" in inventory:
-						print(f"With your new found batteries, you recharge the old flashlight making it useful once more.")
-						print(f"+ Charged Flashlight\n- Dead Flashlight\n- Batteries\n")
+						typingPrint(f"With your new found batteries, you recharge the old flashlight making it useful once more.")
+						typingPrint(f"+ Charged Flashlight\n- Dead Flashlight\n- Batteries\n")
 						inventory.append(f"Charged Flashlight")
 						inventory.remove(f"Dead Flashlight")
 						inventory.remove(f"Batteries")
 				else:
-					print(f"\nYou open the damaged red toolbox again but find nothing of interest.\n")
+					typingPrint(f"\nYou open the damaged red toolbox again but find nothing of interest.\n")
 			else:
-				print(f"\nInput not recognized or not valid right now.\n")
+				typingPrint(f"\nInput not recognized or not valid right now.\n")
 				Garage()
 
 		else:
-			print(f"\nInput not recognized; try again.\n")
+			typingPrint(f"\nInput not recognized; try again.\n")
 			Garage()
 
 def Cellar():
 	global FanShellVar
 	ui = ""
 	crates = Iti("crates")
-	print(f"\nYou walk down into the cellar; all is silent but the cyclic dripping from somewhere.\n\tThere are a few {crates} that look un-opened.")
+	typingPrint(f"\nYou walk down into the cellar; all is silent but the cyclic dripping from somewhere.\n\tThere are a few {crates} that look un-opened.\n")
 	while ui != "Menu":
-		ui = input(f"/// Inputs: 'East', 'Up', 'Interact' ///\n").title()
+		ui = typingInput(f"/// Inputs: 'East', 'Up', 'Interact' ///\n").title()
 		if ui == "Menu":
 			Menu()
 			Cellar()
@@ -566,26 +583,26 @@ def Cellar():
 		elif ui == "Up":
 			LivingRoom()
 		elif ui == "Interact":
-			ui = input(f"\t/// What do you interact with? ///\n").title()
+			ui = typingInput(f"\t/// What do you interact with? ///\n").title()
 			if ui == "Crates":
 				if FanShellVar == 0:
-					print(f"\nOpening the crates, you unfortunately don't see much of importance but a fan shell with no blades.\n")
-					print(f"+ Fan Shell\n")
+					typingPrint(f"\nOpening the crates, you unfortunately don't see much of importance but a fan shell with no blades.\n")
+					typingPrint(f"+ Fan Shell\n")
 					inventory.append(f"Fan Shell")
 					FanShellVar = 1
 					if "Fan Blades" in inventory:
-						print(f"Using your fan blades you pulled from the kids' room, you are able to make a portable cooler.\n")
-						print(f"+ Cooler\n")
+						typingPrint(f"Using your fan blades you pulled from the kids' room, you are able to make a portable cooler.\n")
+						typingPrint(f"+ Cooler\n")
 						inventory.append(f"Cooler")
 						inventory.remove(f"Fan Blades")
 						inventory.remove(f"Fan Shell")
 						CarObjevInven.remove(f"Cooling Fan")
 				else:
-					print(f"\nOpening the crates again, you don't see much of importance.\n")
+					typingPrint(f"\nOpening the crates again, you don't see much of importance.\n")
 			else:
-				print(f"\nInput not recognized or not valid right now.\n")
+				typingPrint(f"\nInput not recognized or not valid right now.\n")
 		else:
-			print(f"\nInput not recognized; try again.\n")
+			typingPrint(f"\nInput not recognized; try again.\n")
 			Cellar()
 
 def DeepCellar():
@@ -594,63 +611,63 @@ def DeepCellar():
 	pipe = Iti("pipe")
 	if "Charged Flashlight" in inventory:
 		if PipeVar == 0:
-			print(f"\nNow able to see with your flashlight, you can see the source of the dripping sound: a leaky {pipe}.\n\tThere's also overgrown cobwebs, and long-forgotten boxes.")
+			typingPrint(f"\nNow able to see with your flashlight, you can see the source of the dripping sound: a leaky {pipe}.\n\tThere's also overgrown cobwebs, and long-forgotten boxes.\n")
 		else:
-			print(f"\nHere in the deep cellar, you see the remains of the leaky pipe you cut, some cobwebs, and old boxes.")
+			typingPrint(f"\nHere in the deep cellar, you see the remains of the leaky pipe you cut, some cobwebs, and old boxes.\n")
 		while ui != "Menu":
-			ui = input(f"/// Inputs: 'West', 'Interact' ///\n").title()
+			ui = typingInput(f"/// Inputs: 'West', 'Interact' ///\n").title()
 			if ui == "Menu":
 				Menu()
 				DeepCellar()
 			elif ui == "West":
 				Cellar()
 			elif ui == "Interact":
-				ui = input(f"\t/// What do you interact with? ///\n").title()
+				ui = typingInput(f"\t/// What do you interact with? ///\n").title()
 				if ui == "Pipe":
 					if PipeVar == 0:
 						if "Shiv" in inventory:
-							print(f"\nWith your shiv, you cut off a piece of the small pipe for your car.\n")
-							print(f"+ Pipe\n")
+							typingPrint(f"\nWith your shiv, you cut off a piece of the small pipe for your car.\n")
+							typingPrint(f"+ Pipe\n")
 							inventory.append(f"Pipe")
 							CarObjevInven.remove(f"Exhaust Pipe")
 							PipeVar = 1
 						else:
-							print(f"\nLooking at the pipe, you realize it's the perfect size for your car, but you need something strong to remove it.\n")
+							typingPrint(f"\nLooking at the pipe, you realize it's the perfect size for your car, but you need something strong to remove it.\n")
 					else:
-						print(f"\nYou can't interact with the pipe again, as it is gone. :(\n")
+						typingPrint(f"\nYou can't interact with the pipe again, as it is gone. :(\n")
 				else:
-					print(f"\nInput either not recognized or not valid right now.\n")
+					typingPrint(f"\nInput either not recognized or not valid right now.\n")
 			else:
-				print(f"\nInput not recognized; try again.\n")
+				typingPrint(f"\nInput not recognized; try again.\n")
 				DeepCellar()
 	else:
-		print(f"\nThis part of the cellar is so far from the staircase that visibility is naught, you need some sort of tool to aid your eyes to proceed.")
-		print(f"\tReturning west to the lit part of the cellar.")
+		typingPrint(f"\nThis part of the cellar is so far from the staircase that visibility is naught, you need some sort of tool to aid your eyes to proceed.\n")
+		typingPrint(f"\tReturning west to the lit part of the cellar.\n")
 		Cellar()
 
 def Backyard():
 	ui= ""
-	print(f"\nExiting the house you feel the early morning dew brush against your boots.\n\tThere's a small table with a chessboard but no chairs; there are only black pawns on squares h7, g6, f7, e7, and d6.\n\t\tWhen you try to move the pieces they solidly stay put.")
+	typingPrint(f"\nExiting the house you feel the early morning dew brush against your boots.\n\tThere's a small table with a chessboard but no chairs; there are only black pawns on squares h7, g6, f7, e7, and d6.\n\t\tWhen you try to move the pieces they solidly stay put.\n")
 	while ui != "Menu":
-		ui = input(f"/// Inputs: 'South' ///\n").title()
+		ui = typingInput(f"/// Inputs: 'South' ///\n").title()
 		if ui == "Menu":
 			Menu()
 			Backyard()
 		elif ui == "South":
 			DownHall()
 		else:
-			print(f"\nInput not recognized; try again.\n")
+			typingPrint(f"\nInput not recognized; try again.\n")
 			Backyard()
 
 def Frontyard():
 	global FrontyardVar
 	ui = ""
 	if FrontyardVar == 0:
-		print(f"\nAs you open the front door, leaving the home, a faraway explosion is heard followed by more screams.\n\tYou should leave soon.")
+		typingPrint(f"\nAs you open the front door, leaving the home, a faraway explosion is heard followed by more screams.\n\tYou should leave soon.\n")
 	else:
-		print(f"\nYou walk by the gray picket fences in front of the house.")
+		typingPrint(f"\nYou walk by the gray picket fences in front of the house.\n")
 	while ui != "Menu":
-		ui = input(f"/// Inputs: 'North', 'East', 'West' ///\n").title()
+		ui = typingInput(f"/// Inputs: 'North', 'East', 'West' ///\n").title()
 		if ui == "Menu":
 			Menu()
 			Frontyard()
@@ -664,7 +681,7 @@ def Frontyard():
 			FrontyardVar = 1
 			FrontyardWest()
 		else:
-			print(f"\nInput not recognized; try again.\n")
+			typingPrint(f"\nInput not recognized; try again.\n")
 			Frontyard()
 
 def FrontyardEast():
@@ -672,36 +689,36 @@ def FrontyardEast():
 	ui = ""
 	sticks = Iti(f"sticks")
 	if StickVar == 0:
-		print(f"\nYou walk farther east from the house, not much is here but a pile of {sticks} and a lone red baneberry.")
+		typingPrint(f"\nYou walk farther east from the house, not much is here but a pile of {sticks} and a lone red baneberry.\n")
 	else:
-		print(f"\nYou walk farther east from the house, not much is here but a lonesome red baneberry.")
+		typingPrint(f"\nYou walk farther east from the house, not much is here but a lonesome red baneberry.\n")
 	while ui != "Menu":
-		ui = input(f"/// Inputs: 'West', 'Interact' ///\n").title()
+		ui = typingInput(f"/// Inputs: 'West', 'Interact' ///\n").title()
 		if ui == "Menu":
 			Menu()
 			FrontyardEast()
 		elif ui == "West":
 			Frontyard()
 		elif ui == "Interact":
-			ui = input(f"\t/// What do you interact with? ///\n").title()
+			ui = typingInput(f"\t/// What do you interact with? ///\n").title()
 			if ui == "Sticks":
 				if StickVar == 0:
-					print(f"\nYou pick up a stick.\n")
-					print(f"+ Stick")
+					typingPrint(f"\nYou pick up a stick.\n")
+					typingPrint(f"\n+ Stick\n\n")
 					inventory.append(f"Stick")
 					StickVar = 1
 					if "Blade" in inventory:
-						print(f"\nNow; with your blade from earlier, you craft a shiv.")
-						print(f"+ Shiv\n- Stick\n- Blade")
+						typingPrint(f"Now; with your blade from earlier, you craft a shiv.")
+						typingPrint(f"\n\n+ Shiv\n\n- Stick\n\n- Blade\n\n")
 						inventory.append(f"Shiv")
 						inventory.remove(f"Blade")
 						inventory.remove(f"Stick")
 				else:
-					print(f"\nHaving already picked up a stick, there is no longer one to.\n")
+					typingPrint(f"\nHaving already picked up a stick, there is no longer one to.\n")
 			else:
-				print(f"\nInput not recognized or not valid right now.\n")
+				typingPrint(f"\nInput not recognized or not valid right now.\n")
 		else:
-			print(f"\nInput not recognized; try again.\n")
+			typingPrint(f"\nInput not recognized; try again.\n")
 			FrontyardEast()
 
 def FrontyardWest():
@@ -709,36 +726,35 @@ def FrontyardWest():
 	global HoseVar
 	hose = Iti(f"hose")
 	if HoseVar == 0:
-		print(f"\nYou walk a little farther west of the house and see a dark green garden {hose} attached to it by a large vine overtaking the wall.")
+		typingPrint(f"\nYou walk a little farther west of the house and see a dark green garden {hose} attached to it by a large vine overtaking the wall.\n")
 	else:
-		print(f"\nYou walk a little farther west of the house and see a large vine overtaking the wall.")
+		typingPrint(f"\nYou walk a little farther west of the house and see a large vine overtaking the wall.\n")
 	while ui != "Menu":
-		ui = input(f"/// Inputs: 'East', 'Interact' ///\n").title()
+		ui = typingInput(f"/// Inputs: 'East', 'Interact' ///\n").title()
 		if ui == "Menu":
 			Menu()
 			FrontyardWest()
 		elif ui == "East":
 			Frontyard()
 		elif ui == "Interact":
-			ui = input(f"\t/// What do you interact with? ///\n").title()
+			ui = typingInput(f"\t/// What do you interact with? ///\n").title()
 			if ui == "Hose":
 				if HoseVar == 0:
 					if "Bobby Pins" in inventory:
-						print(f"\nUsing your bobby pins you pick the padlock chaining the hose.\n")
-						print(f"+ Hose\n")
+						typingPrint(f"\nUsing your bobby pins you pick the padlock chaining the hose.\n")
+						typingPrint(f"+ Hose\n")
 						inventory.append(f"Hose")
 						CarObjevInven.remove(f"Hose")
 						HoseVar = 1
 					else:
-						print(f"\nLooking at the hose you realize that it's chained to the wall, locked by a padlock.\n\tYou need some way of opening the lock.\n")
+						typingPrint(f"\nLooking at the hose you realize that it's chained to the wall, locked by a padlock.\n\tYou need some way of opening the lock.\n")
 				else:
-					print(f"\nSince you've already interacted with the hose, you can't again.\n")
+					typingPrint(f"\nSince you've already interacted with the hose, you can't again.\n")
 			else:
-				print(f"\nInput not recognized or not valid right now.\n")
+				typingPrint(f"\nInput not recognized or not valid right now.\n")
 		else:
-			print(f"\nInput not recognized; try again.\n")
+			typingPrint(f"\nInput not recognized; try again.\n")
 			FrontyardWest()
-
 Player()
 StartVar = 1
 Bedroom()
