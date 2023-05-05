@@ -1,5 +1,4 @@
-import pickle
-import time,sys
+import pickle, time, sys
 #main file for text-based game
 
 #multiple variables that will be called, saved, and loaded.
@@ -23,6 +22,17 @@ FanShellVar = 0
 GooseVar = 0
 StartVar = 0
 
+class Title():
+#Class to print the game's title
+	def __init__(self):
+		print("""
+   ____                                                                                                  
+  / __ \__  __(_)  ____ ___  ______ ______(_)  ____ _____  ____ ______   _________  ____  ____ _____  / /_
+ / / / / / / / /  / __ `/ / / / __ `/ ___/ /  / __ `/ __ \/ __ `/ ___/  / ___/ __ \/ __ \/ __ `/ __ \/ __/
+/ /_/ / /_/ / /  / /_/ / /_/ / /_/ (__  / /  / /_/ / / / / /_/ (__  )  (__  / /_/ / / / / /_/ / / / / /__ 
+\___\_\__,_/_/   \__, /\__,_/\__,_/____/_/   \__,_/_/ /_/\__,_/____/  /____/\____/_/ /_/\__,_/_/ /_/\__  ( )
+                   /_/                                                                                   |/ 
+""")
 class Player():
 #Class to determine player's name and initialize program/resume previous file
 	def __init__(self):
@@ -31,21 +41,25 @@ class Player():
 		if ui == "New":
 			if StartVar == 0:
 				self.name = input(f"\nGAME BEGUN.\nWhat is your name?\n").title()
-				print(f"\n{self.name} begins a maybe-not-so-epic quest!\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.\n")
+				print(f"\n{self.name} begins a maybe-not-so-epic quest!\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.")
+				Title()
 				print(f"---===---===---===---===---===---===---===---\n")
 			else:
-				print(f"\nGAME RESUMED. \nReturning to your maybe-not-so epic quest, your progress has been saved! You will renew in the master bedroom.\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.\n")
-				print(f"---===---===---===---===---===---===---===---")
+				print(f"\nGAME RESUMED. \nReturning to your maybe-not-so epic quest, your progress has been saved! You will renew in the master bedroom.\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.")
+				Title()
+				print(f"---===---===---===---===---===---===---===---\n")
 		elif ui == "Resume":
 			filecheck()
 			if StartVar == 0:
 				print(f"\nNo previous game file found, starting new game.\n")
 				self.name = input(f"GAME BEGUN.\nWhat is your name?\n").title()
-				print(f"\n{self.name} begins a maybe-not-so-epic quest!\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.\n")
+				print(f"\n{self.name} begins a maybe-not-so-epic quest!\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.")
+				Title()
 				print(f"---===---===---===---===---===---===---===---\n")
 			else:
 				load()
-				print(f"\nGAME RESUMED. \nReturning to your maybe-not-so epic quest, your progress has been saved! You will renew in the master bedroom.\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.\n")
+				print(f"\nGAME RESUMED. \nReturning to your maybe-not-so epic quest, your progress has been saved! You will renew in the master bedroom.\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.")
+				Title()
 				print(f"---===---===---===---===---===---===---===---\n")
 		else:
 			print(f"\nInput not recognized; type either 'New' or 'Resume'.\n")
@@ -85,6 +99,7 @@ class Menu(Player):
 				ui = input("\tWould you like to 'quit' game or 'return' to menu to save?\n").title()
 				if ui == "Quit":
 					print(f"\n\tThanks for playing, goodbye.\n")
+					print(f"---===---===---===---===---===---===---===---\n")
 					exit()
 				elif ui == "Return":
 					pass
@@ -139,14 +154,14 @@ def typingPrint(text):
 	for character in text:
 		sys.stdout.write(character)
 		sys.stdout.flush()
-		time.sleep(0) #0.0315
+		time.sleep(0.0315) #0.0315
   
 def typingInput(text):
 #ditto of above function, but for input
 	for character in text:
 		sys.stdout.write(character)
 		sys.stdout.flush()
-		time.sleep(0)
+		time.sleep(0.0315)
 	value = input()
 	return value
 
@@ -216,7 +231,7 @@ def load():
 ###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---
 
 def Bedroom():
-#starting location
+#starting location, from here on are functions of in-game rooms/locations
 	global BedroomVar
 	global DresserVar
 	dresser = Iti("dresser")
@@ -755,7 +770,6 @@ def FrontyardWest():
 		else:
 			typingPrint(f"\nInput not recognized; try again.\n")
 			FrontyardWest()
-
 Player()
 StartVar = 1
 Bedroom()
