@@ -1,5 +1,4 @@
-import pickle
-import time,sys
+import pickle, time, sys
 #main file for text-based game
 
 #multiple variables that will be called, saved, and loaded.
@@ -23,6 +22,17 @@ FanShellVar = 0
 GooseVar = 0
 StartVar = 0
 
+class Title():
+#Class to print the game's title
+	def __init__(self):
+		print("""
+   ____                                                                                                  
+  / __ \__  __(_)  ____ ___  ______ ______(_)  ____ _____  ____ ______   _________  ____  ____ _____  / /_
+ / / / / / / / /  / __ `/ / / / __ `/ ___/ /  / __ `/ __ \/ __ `/ ___/  / ___/ __ \/ __ \/ __ `/ __ \/ __/
+/ /_/ / /_/ / /  / /_/ / /_/ / /_/ (__  / /  / /_/ / / / / /_/ (__  )  (__  / /_/ / / / / /_/ / / / / /__ 
+\___\_\__,_/_/   \__, /\__,_/\__,_/____/_/   \__,_/_/ /_/\__,_/____/  /____/\____/_/ /_/\__,_/_/ /_/\__  ( )
+                   /_/                                                                                   |/ 
+""")
 class Player():
 #Class to determine player's name and initialize program/resume previous file
 	def __init__(self):
@@ -31,21 +41,25 @@ class Player():
 		if ui == "New":
 			if StartVar == 0:
 				self.name = input(f"\nGAME BEGUN.\nWhat is your name?\n").title()
-				print(f"\n{self.name} begins a maybe-not-so-epic quest!\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.\n")
+				print(f"\n{self.name} begins a maybe-not-so-epic quest!\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.")
+				Title()
 				print(f"---===---===---===---===---===---===---===---\n")
 			else:
-				print(f"\nGAME RESUMED. \nReturning to your maybe-not-so epic quest, your progress has been saved! You will renew in the master bedroom.\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.\n")
-				print(f"---===---===---===---===---===---===---===---")
+				print(f"\nGAME RESUMED. \nReturning to your maybe-not-so epic quest, your progress has been saved! You will renew in the master bedroom.\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.")
+				Title()
+				print(f"---===---===---===---===---===---===---===---\n")
 		elif ui == "Resume":
 			filecheck()
 			if StartVar == 0:
 				print(f"\nNo previous game file found, starting new game.\n")
 				self.name = input(f"GAME BEGUN.\nWhat is your name?\n").title()
-				print(f"\n{self.name} begins a maybe-not-so-epic quest!\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.\n")
+				print(f"\n{self.name} begins a maybe-not-so-epic quest!\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.")
+				Title()
 				print(f"---===---===---===---===---===---===---===---\n")
 			else:
 				load()
-				print(f"\nGAME RESUMED. \nReturning to your maybe-not-so epic quest, your progress has been saved! You will renew in the master bedroom.\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.\n")
+				print(f"\nGAME RESUMED. \nReturning to your maybe-not-so epic quest, your progress has been saved! You will renew in the master bedroom.\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.")
+				Title()
 				print(f"---===---===---===---===---===---===---===---\n")
 		else:
 			print(f"\nInput not recognized; type either 'New' or 'Resume'.\n")
@@ -85,6 +99,7 @@ class Menu(Player):
 				ui = input("\tWould you like to 'quit' game or 'return' to menu to save?\n").title()
 				if ui == "Quit":
 					print(f"\n\tThanks for playing, goodbye.\n")
+					print(f"---===---===---===---===---===---===---===---\n")
 					exit()
 				elif ui == "Return":
 					pass
@@ -105,7 +120,7 @@ class Car():
 				ui = typingInput(f"\n\t/// Do you take the 'main' path or the 'offshoot'? ///\n").title()
 				if ui == "Main":
 					typingPrint(f"\nDriving continuouly down the main path, you are able to leave the home's property a final time.\n\tHopefuly this world has intentions in your favor...\n\n ||| Thanks for playing! Goodbye. |||\n")
-					typingPrint(f"---===---===---===---===---===---===---===---\n")
+					typingPrint(f"---===---===---===---===---===---===---===---\n\n")
 					quit()
 				elif ui == "Offshoot":
 					typingPrint(f"\nLeaving the main path, and taking the offshoot, you drive down an unpaved road until you see a small shack.\n\tUpon entering you see nothing but a large, metal door and a keypad taking numbers that correlate with letters h, g, f, e and d in that order.\n")
@@ -115,17 +130,17 @@ class Car():
 							typingPrint(f"\nThe metal door loudly opens revealing a single, white LED light.\n\tEntering the small room the door closes behind you and the room shakes downward.\n\t\tThe door opens again revealing an open earth cave.\n")
 							typingPrint(f"\t\t\tNestled in the stalagmites you see a grand vault door and labeled above it a quote:\n\t\t\t\t\"Qui quasi anas sonant, sunt qui supersunt.\"\n")
 							typingPrint(f"||| Thanks for playing! goodbye. |||\n")
-							typingPrint(f"---===---===---===---===---===---===---===---\n")
+							typingPrint(f"---===---===---===---===---===---===---===---\n\n")
 							quit()
 						elif ui == "Exit":
 							typingPrint(f"\nFailing to know the code, you exit the shack and drive down the pathway.\n\tHopefuly this world has intenions in your favor...\n\n\t ||| Thanks for playing! Goodbye. |||\n")
-							typingPrint(f"---===---===---===---===---===---===---===---\n")
+							typingPrint(f"---===---===---===---===---===---===---===---\n\n")
 							quit()
 						else:
-							typingPrint(f"\nThat was not the code, typingInput 'Exit' to leave the shack.\n")
+							typingPrint(f"\nThat was not the code, input 'Exit' to leave the shack.\n")
 						
 				else:
-					typingPrint(f"\nInput not recognized or not valid right now.\n")
+					typingPrint(f"\nInput not recognized or not valid right now. Input either 'Offshoot' or 'Main'.\n")
 			quit()
 		if CarVar == 0:
 			typingPrint(f"\nYou get get into your somber excuse of a 'car' and start the engine.\n\tUpon starting it though the vehicle sputters into silence. Opening the hood you realize its cooling fan is gone;\n\t\tin fact, the hoses, exhaust, air filter, and lights are gone. You've been robbed.\n")
@@ -139,14 +154,14 @@ def typingPrint(text):
 	for character in text:
 		sys.stdout.write(character)
 		sys.stdout.flush()
-		time.sleep(0) #0.0315
+		time.sleep(0.0315) #0.0315
   
 def typingInput(text):
 #ditto of above function, but for input
 	for character in text:
 		sys.stdout.write(character)
 		sys.stdout.flush()
-		time.sleep(0)
+		time.sleep(0.0315)
 	value = input()
 	return value
 
@@ -216,7 +231,7 @@ def load():
 ###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---
 
 def Bedroom():
-#starting location
+#starting location, from here on are functions of in-game rooms/locations
 	global BedroomVar
 	global DresserVar
 	dresser = Iti("dresser")
@@ -361,7 +376,7 @@ def Roof():
 				if UnitVar == 0:
 					if "Shiv" in inventory:
 						typingPrint(f"\nYou cut out the air-conditioning unit to use as a makeshift air filter.\n")
-						typingPrint(f"\n+ Air Filter\n")
+						typingPrint(f"\n+ Air Filter\n\n")
 						inventory.append(f"Air Filter")
 						CarObjevInven.remove(f"Air Filter")
 						UnitVar = 1
@@ -549,12 +564,12 @@ def Garage():
 			elif ui == "Toolbox":
 				if ToolboxVar == 0:
 					typingPrint(f"\nYou open the rusty red toolbox and find two old batteries.\n")
-					typingPrint(f"+ Batteries\n")
+					typingPrint(f"\n+ Batteries\n\n")
 					inventory.append(f"Batteries")
 					ToolboxVar = 1
 					if "Dead Flashlight" in inventory:
 						typingPrint(f"With your new found batteries, you recharge the old flashlight making it useful once more.")
-						typingPrint(f"+ Charged Flashlight\n- Dead Flashlight\n- Batteries\n")
+						typingPrint(f"\n\n+ Charged Flashlight\n\n- Dead Flashlight\n\n- Batteries\n\n")
 						inventory.append(f"Charged Flashlight")
 						inventory.remove(f"Dead Flashlight")
 						inventory.remove(f"Batteries")
@@ -587,12 +602,12 @@ def Cellar():
 			if ui == "Crates":
 				if FanShellVar == 0:
 					typingPrint(f"\nOpening the crates, you unfortunately don't see much of importance but a fan shell with no blades.\n")
-					typingPrint(f"+ Fan Shell\n")
+					typingPrint(f"\n+ Fan Shell\n\n")
 					inventory.append(f"Fan Shell")
 					FanShellVar = 1
 					if "Fan Blades" in inventory:
 						typingPrint(f"Using your fan blades you pulled from the kids' room, you are able to make a portable cooler.\n")
-						typingPrint(f"+ Cooler\n")
+						typingPrint(f"\n+ Cooler\n\n")
 						inventory.append(f"Cooler")
 						inventory.remove(f"Fan Blades")
 						inventory.remove(f"Fan Shell")
@@ -627,7 +642,7 @@ def DeepCellar():
 					if PipeVar == 0:
 						if "Shiv" in inventory:
 							typingPrint(f"\nWith your shiv, you cut off a piece of the small pipe for your car.\n")
-							typingPrint(f"+ Pipe\n")
+							typingPrint(f"\n+ Pipe\n\n")
 							inventory.append(f"Pipe")
 							CarObjevInven.remove(f"Exhaust Pipe")
 							PipeVar = 1
@@ -742,7 +757,7 @@ def FrontyardWest():
 				if HoseVar == 0:
 					if "Bobby Pins" in inventory:
 						typingPrint(f"\nUsing your bobby pins you pick the padlock chaining the hose.\n")
-						typingPrint(f"+ Hose\n")
+						typingPrint(f"\n+ Hose\n\n")
 						inventory.append(f"Hose")
 						CarObjevInven.remove(f"Hose")
 						HoseVar = 1
