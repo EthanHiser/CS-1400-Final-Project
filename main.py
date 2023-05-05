@@ -357,7 +357,7 @@ def Roof():
 	global GooseVar
 	unit = Iti("unit")
 	if GooseVar == 0:
-		typingPrint(f"\nOpening the window, you step out onto the roof. From up here you can see a blazing, orange glow in the distance.\n\tAs you look at its fierce size, a herd of geese fly overhead. To your right is an old air-conditioning {unit} that may still work.\n")
+		typingPrint(f"\nOpening the window, you step out onto the roof. From up here you can see a blazing, orange glow in the distance.\n\tAs you look at its fierce size, a herd of buffleheads fly overhead. To your right is an old air-conditioning {unit} that may still work.\n")
 		GooseVar = 1
 	elif UnitVar == 0:
 		typingPrint(f"\nOpening the window, you step out onto the roof. From up here you can see a blazing, orange glow in the distance.\n\tTo your right is an old air-conditioning {unit} that may still work.\n")
