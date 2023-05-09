@@ -21,6 +21,7 @@ UnitVar = 0
 FanShellVar = 0
 GooseVar = 0
 StartVar = 0
+TextSpeed = 0.0315
 
 class Title():
 #Class to print the game's title
@@ -71,9 +72,11 @@ class Menu(Player):
 		ui = ""
 		while ui != "R":
 			print(f"\n---///---///---[ MENU ]---///---///---")
-			ui = input(f"\nThis is the menu, here you may:\nI - View Inventory\nS - Save Game\nL - Load Game\nR - Return to Game\nQ - Quit Game\n\n  ---///---///---///---///---///---\n").title()
+			ui = input(f"\nThis is the menu, here you may:\nI - View Inventory\nC - Change Text Speed\nS - Save Game\nL - Load Game\nR - Return to Game\nQ - Quit Game\n\n  ---///---///---///---///---///---\n").title()
 			if ui == "I":
 				print(f"\nInventory: {inventory}")
+			elif ui == "C":
+				speedchange()
 			elif ui == "S":
 				save()
 				print(f"\nGame Saved!")
@@ -149,19 +152,55 @@ class Car():
 		else:
 			typingPrint(f"\n\t/// Objective: Get {CarObjevInven} ///\n")
 
+def speedchange():
+#function to allow user to change the speed at which game text prints
+	global TextSpeed
+	very = Iti("very")
+	ui = ""
+	ui = input(f"\nWhat would you like the text speed to be?\n1 - Instant\n2 - Fast\n3 - Medium (Default)\n4 - Slow\n5 - Custom Value\n")
+	if ui == "1":
+		TextSpeed = 0
+		print(f"\nDone! Text is now at a speed of {TextSpeed}.")
+	elif ui == "2":
+		TextSpeed = 0.01575
+		print(f"\nDone! Text is now at a speed of {TextSpeed}.")
+	elif ui == "3":
+		TextSpeed = 0.0315
+		print(f"\nDone! Text is now at a speed of {TextSpeed}.")
+	elif ui == "4":
+		TextSpeed = 0.063
+		print(f"\nDone! Text is now at a speed of {TextSpeed}.")
+	elif ui == "5":
+		ui = ""
+		try:
+			ui = float(input(f"\nEnter custom text speed value.\n\tValue MUST be positive and less than 1, otherwise they would be {very} slow.\n"))
+			if ui < 0:
+				print(f"\nNegative numbers are not valid.")
+			elif ui > 1:
+				print(f"\nNumbers above 1 are not accepted.")
+			else:
+				TextSpeed = ui
+				print(f"\nDone! Text is now at a speed of {TextSpeed}.")
+		except ValueError:
+			print(f"\nInput was not a number.")
+	else:
+		print(f"\nInput not recognized or not valid right now!")
+	
+
+
 def typingPrint(text):
 #function to print words at a slower, more appealing speed
 	for character in text:
 		sys.stdout.write(character)
 		sys.stdout.flush()
-		time.sleep(0.0315) #0.0315
+		time.sleep(TextSpeed) #0.0315
   
 def typingInput(text):
 #ditto of above function, but for input
 	for character in text:
 		sys.stdout.write(character)
 		sys.stdout.flush()
-		time.sleep(0.0315)
+		time.sleep(TextSpeed)
 	value = input()
 	return value
 
@@ -201,10 +240,11 @@ def save():
 		pickle.dump(UnitVar, f)
 		pickle.dump(FanShellVar, f)
 		pickle.dump(GooseVar, f)
+		pickle.dump(TextSpeed, f)
 
 def load():
 	#of course, function to load all relevant variables from data.pkl
-	global StartVar, CarObjevInven, inventory, BedroomVar, FrontyardVar, DresserVar, MirrorVar, ToolboxVar, CarVar, ChairVar, LightbulbVar, HoseVar, PipeVar, StickVar, BladeVar, FanVar, UnitVar, FanShellVar, GooseVar
+	global StartVar, CarObjevInven, inventory, BedroomVar, FrontyardVar, DresserVar, MirrorVar, ToolboxVar, CarVar, ChairVar, LightbulbVar, HoseVar, PipeVar, StickVar, BladeVar, FanVar, UnitVar, FanShellVar, GooseVar, TextSpeed
 	with open("data.pkl", "rb") as f:
 		StartVar = pickle.load(f)
 		CarObjevInven = pickle.load(f)
@@ -225,8 +265,9 @@ def load():
 		UnitVar = pickle.load(f)
 		FanShellVar = pickle.load(f)
 		GooseVar = pickle.load(f)
+		TextSpeed = pickle.load(f)
 
-	return StartVar, CarObjevInven, inventory, BedroomVar, FrontyardVar, DresserVar, MirrorVar, ToolboxVar, CarVar, ChairVar, LightbulbVar, HoseVar, PipeVar, StickVar, BladeVar, FanVar, UnitVar, FanShellVar, GooseVar
+	return StartVar, CarObjevInven, inventory, BedroomVar, FrontyardVar, DresserVar, MirrorVar, ToolboxVar, CarVar, ChairVar, LightbulbVar, HoseVar, PipeVar, StickVar, BladeVar, FanVar, UnitVar, FanShellVar, GooseVar, TextSpeed
 
 ###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---
 
