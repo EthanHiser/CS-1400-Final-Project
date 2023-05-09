@@ -2,6 +2,7 @@ import pickle, time, sys
 #main file for text-based game
 
 #multiple variables that will be called, saved, and loaded.
+TextSpeed = 0.0315
 CarObjevInven = ["Cooling Fan", "Hose", "Air Filter", "Exhaust Pipe", "Light Bulb"]
 inventory = []
 BedroomVar = 0
@@ -71,9 +72,11 @@ class Menu(Player):
 		ui = ""
 		while ui != "R":
 			print(f"\n---///---///---[ MENU ]---///---///---")
-			ui = input(f"\nThis is the menu, here you may:\nI - View Inventory\nS - Save Game\nL - Load Game\nR - Return to Game\nQ - Quit Game\n\n  ---///---///---///---///---///---\n").title()
+			ui = input(f"\nThis is the menu, here you may:\nI - View Inventory\nC - Change Text Speed\nS - Save Game\nL - Load Game\nR - Return to Game\nQ - Quit Game\n\n  ---///---///---///---///---///---\n").title()
 			if ui == "I":
 				print(f"\nInventory: {inventory}")
+			elif ui == "C":
+				speedchange()
 			elif ui == "S":
 				save()
 				print(f"\nGame Saved!")
@@ -149,19 +152,55 @@ class Car():
 		else:
 			typingPrint(f"\n\t/// Objective: Get {CarObjevInven} ///\n")
 
+def speedchange():
+#function to allow user to change the speed at which game text prints
+	global TextSpeed
+	very = Iti("very")
+	ui = ""
+	ui = input(f"\nWhat would you like the gameplay text speed to be?\n1 - Instant\n2 - Fast\n3 - Medium (Default)\n4 - Slow\n5 - Custom Value\n")
+	if ui == "1":
+		TextSpeed = 0
+		print(f"\nDone! Text is now at a speed of {TextSpeed}.")
+	elif ui == "2":
+		TextSpeed = 0.01575
+		print(f"\nDone! Text is now at a speed of {TextSpeed}.")
+	elif ui == "3":
+		TextSpeed = 0.0315
+		print(f"\nDone! Text is now at a speed of {TextSpeed}.")
+	elif ui == "4":
+		TextSpeed = 0.063
+		print(f"\nDone! Text is now at a speed of {TextSpeed}.")
+	elif ui == "5":
+		ui = ""
+		try:
+			ui = float(input(f"\nEnter custom text speed value.\n\tValue MUST be positive and less than 1, otherwise they would be {very} slow.\n"))
+			if ui < 0:
+				print(f"\nNegative numbers are not valid.")
+			elif ui > 1:
+				print(f"\nNumbers above 1 are not accepted.")
+			else:
+				TextSpeed = ui
+				print(f"\nDone! Text is now at a speed of {TextSpeed}.")
+		except ValueError:
+			print(f"\nInput was not a number.")
+	else:
+		print(f"\nInput not recognized or not valid right now!")
+	
+
+
 def typingPrint(text):
 #function to print words at a slower, more appealing speed
 	for character in text:
 		sys.stdout.write(character)
 		sys.stdout.flush()
-		time.sleep(0.0315) #0.0315
+		time.sleep(TextSpeed) #0.0315
   
 def typingInput(text):
 #ditto of above function, but for input
 	for character in text:
 		sys.stdout.write(character)
 		sys.stdout.flush()
-		time.sleep(0.0315)
+		time.sleep(TextSpeed)
 	value = input()
 	return value
 
@@ -201,10 +240,11 @@ def save():
 		pickle.dump(UnitVar, f)
 		pickle.dump(FanShellVar, f)
 		pickle.dump(GooseVar, f)
+		pickle.dump(TextSpeed, f)
 
 def load():
 	#of course, function to load all relevant variables from data.pkl
-	global StartVar, CarObjevInven, inventory, BedroomVar, FrontyardVar, DresserVar, MirrorVar, ToolboxVar, CarVar, ChairVar, LightbulbVar, HoseVar, PipeVar, StickVar, BladeVar, FanVar, UnitVar, FanShellVar, GooseVar
+	global StartVar, CarObjevInven, inventory, BedroomVar, FrontyardVar, DresserVar, MirrorVar, ToolboxVar, CarVar, ChairVar, LightbulbVar, HoseVar, PipeVar, StickVar, BladeVar, FanVar, UnitVar, FanShellVar, GooseVar, TextSpeed
 	with open("data.pkl", "rb") as f:
 		StartVar = pickle.load(f)
 		CarObjevInven = pickle.load(f)
@@ -225,8 +265,9 @@ def load():
 		UnitVar = pickle.load(f)
 		FanShellVar = pickle.load(f)
 		GooseVar = pickle.load(f)
+		TextSpeed = pickle.load(f)
 
-	return StartVar, CarObjevInven, inventory, BedroomVar, FrontyardVar, DresserVar, MirrorVar, ToolboxVar, CarVar, ChairVar, LightbulbVar, HoseVar, PipeVar, StickVar, BladeVar, FanVar, UnitVar, FanShellVar, GooseVar
+	return StartVar, CarObjevInven, inventory, BedroomVar, FrontyardVar, DresserVar, MirrorVar, ToolboxVar, CarVar, ChairVar, LightbulbVar, HoseVar, PipeVar, StickVar, BladeVar, FanVar, UnitVar, FanShellVar, GooseVar, TextSpeed
 
 ###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---###---
 
@@ -239,7 +280,7 @@ def Bedroom():
 	if BedroomVar == 0:
 		typingPrint(f"Screams of the distance awaken you from your short lived slumber, and thus your stay here.\n\tYou sit up and out of the creaking bed, grab your rifle off the {dresser}, begin to head to the garage.\n")
 	else:
-		typingPrint(f"\nYou re-enter the master bedroom; not much is here besides a {dresser} and bedframe.\n")
+		typingPrint(f"\nYou re-enter the master bedroom; not much is here besides a {dresser} and bedframe.\n\tA hanging art piece with the title 'Pandemonium' reminds you of familiar times.\n")
 	while ui != "Menu":
 		ui = typingInput(f"/// Inputs: 'East', 'West', 'South', 'Interact' ///\n").title()
 		if ui == "Menu":
@@ -281,7 +322,7 @@ def Bathroom():
 	ui = ""
 	global MirrorVar
 	mirror = Iti("mirror")
-	typingPrint(f"\nYou enter the master bedroom's bathroom. In it, cracked {mirror} and stained walls.\n")
+	typingPrint(f"\nYou enter the master bedroom's bathroom. In it, cracked {mirror} and stained walls.\n\tVines from the outside have infiltrated through the window.\n")
 	while ui != "Menu":
 		ui = typingInput(f"/// Inputs: 'East', 'Interact' ///\n").title()
 		if ui == "Menu":
@@ -313,7 +354,7 @@ def KidsRoom():
 	if FanVar == 0:
 		typingPrint(f"\nSeeing strewn toys and clothing about; you must be in the room that was once for the children of this home.\n\tAbove a derelict cradle you see a small celing {fan}.\n")
 	else:
-		typingPrint(f"\nSeeing strewn toys and clothing about; you must be in the room that was once for the children of this home.\n")
+		typingPrint(f"\nReturning to the kids' room, you notice a small torn teddy bear under a dresser.\n")
 	while ui != "Menu":
 		ui = typingInput(f"/// Inputs: 'North', 'East', 'South' 'Interact' ///\n").title()
 		if ui == "Menu":
@@ -357,12 +398,12 @@ def Roof():
 	global GooseVar
 	unit = Iti("unit")
 	if GooseVar == 0:
-		typingPrint(f"\nOpening the window, you step out onto the roof. From up here you can see a blazing, orange glow in the distance.\n\tAs you look at its fierce size, a herd of buffleheads fly overhead. To your right is an old air-conditioning {unit} that may still work.\n")
+		typingPrint(f"\nOpening the window, you step out onto the house's overhang roof. From up here you can see a blazing, orange glow in the distance.\n\tAs you look at its fierce size, a herd of buffleheads fly overhead. To your right is an old air-conditioning {unit} that may still work.\n")
 		GooseVar = 1
 	elif UnitVar == 0:
-		typingPrint(f"\nOpening the window, you step out onto the roof. From up here you can see a blazing, orange glow in the distance.\n\tTo your right is an old air-conditioning {unit} that may still work.\n")
+		typingPrint(f"\nOpening the window, you step out onto the house's overhang roof. From up here you can see a blazing, orange glow in the distance.\n\tTo your right is an old air-conditioning {unit} that may still work.\n")
 	else:
-		typingPrint(f"Opening the window, you step out onto the roof. From up here you can see a blazing, orange glow in the distance.\n")
+		typingPrint(f"Opening the window, you step out onto the roof. From up here you can see a blazing, orange glow in the distance. Its strong, smoky odor infiltrates your lungs.\n")
 	while ui != "Menu":
 		ui = typingInput(f"/// Inputs: 'North', 'Interact' ///\n").title()
 		if ui == "Menu":
@@ -409,7 +450,7 @@ def UpHall():
 
 def LivingRoom():
 	ui = ""
-	typingPrint(f"\nYour movement silently rocks a thin wooden chair in front of an old television set. The rug of this living room is moldy in wet.\n")
+	typingPrint(f"\nYour movement silently rocks a thin wooden chair in front of an old television set. The rug of this living room is moldy in wet.\n\tA spilled coffee mug stains books and papers on top of a small table in the center of the room.\n")
 	while ui != "Menu":
 		ui = typingInput(f"/// Inputs: 'East', 'West', 'Up', 'Down' ///\n").title()
 		if ui == "Menu":
@@ -429,7 +470,7 @@ def LivingRoom():
 
 def DiningRoom():
 	ui = ""
-	typingPrint(f"\nA low light lamp lights the family table. China and cutlery are littered on the floor.\n")
+	typingPrint(f"\nA low light lamp lights the family's dining table. China and cutlery are littered on the floor.\n\tOn the wall there's a painting of a constellation under large purple words 'Draco'.\n")
 	while ui != "Menu":
 		ui = typingInput(f"/// Inputs: 'North', 'East', 'South' ///\n").title()
 		if ui == "Menu":
@@ -458,11 +499,11 @@ def Kitchen():
 	lightbulb = Iti("lightbulb")
 	chair = Iti("chair")
 	if LightbulbVar == 1:
-		typingPrint(f"\nWalking on the checkerboard floor you see a disheveled, looted kitchen. Any trace of food is simply gone.\n")
+		typingPrint(f"\nWalking on the checkerboard floor you see a disheveled, looted kitchen. Any trace of food is gone.\n")
 	elif ChairVar == 1:
-		typingPrint(f"\nWalking on the checkerboard floor you see a disheveled, looted kitchen. Any trace of food is simply gone.\n\tThough you do see a flickering {lightbulb} above a now right-side up chair.\n")
+		typingPrint(f"\nWalking on the checkerboard floor you see a disheveled, looted kitchen. Any trace of food is gone.\n\tThough you do see a flickering {lightbulb} above a now right-side up chair.\n")
 	else:
-		typingPrint(f"Walking on the checkerboard floor you see a disheveled, looted kitchen. Any trace of food is simply gone.\n\tThough you do see a flickering {lightbulb} above an overturned {chair}.\n")
+		typingPrint(f"Walking on the checkerboard floor you see a disheveled, looted kitchen. Any trace of food is gone.\n\tThough you do see a flickering {lightbulb} above an overturned {chair}.\n")
 	while ui != "Menu":
 		ui = typingInput(f"/// Inputs: 'East', 'South', 'Interact' ///\n").title()
 		if ui == "Menu":
@@ -587,7 +628,7 @@ def Cellar():
 	global FanShellVar
 	ui = ""
 	crates = Iti("crates")
-	typingPrint(f"\nYou walk down into the cellar; all is silent but the cyclic dripping from somewhere.\n\tThere are a few {crates} that look un-opened.\n")
+	typingPrint(f"\nYou walk down into the cellar; all is silent but the cyclic dripping from somewhere.\n\tThere are a few {crates} that look un-opened as well as a large black piano.\n")
 	while ui != "Menu":
 		ui = typingInput(f"/// Inputs: 'East', 'Up', 'Interact' ///\n").title()
 		if ui == "Menu":
@@ -614,6 +655,8 @@ def Cellar():
 						CarObjevInven.remove(f"Cooling Fan")
 				else:
 					typingPrint(f"\nOpening the crates again, you don't see much of importance.\n")
+			if ui == "Piano":
+				print(f"\ne4 d4# e4 d4# e4 d4# b3 d4 c4 a3\n")
 			else:
 				typingPrint(f"\nInput not recognized or not valid right now.\n")
 		else:
