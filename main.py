@@ -644,7 +644,7 @@ def Cellar():
 			if ui == "Crates":
 				if FanShellVar == 0:
 					typingPrint(f"\nOpening the crates, you unfortunately don't see much of importance but a fan shell with no blades.\n")
-					typingPrint(f"\n+ Fan Shell\n\n")
+					typingPrint(f"\n+ Fan Shell\n")
 					inventory.append(f"Fan Shell")
 					FanShellVar = 1
 					if "Fan Blades" in inventory:
@@ -657,7 +657,15 @@ def Cellar():
 				else:
 					typingPrint(f"\nOpening the crates again, you don't see much of importance.\n")
 			if ui == "Piano":
-				print(f"\ne4 d4# e4 d4# e4 d4# b3 d4 c4 a3\n")
+				print("""
+    e4     e4     e4                
+       d4#    d4#    d4#             
+                                     
+                            d4      
+                               c4   
+                         b3           
+                                  a3 
+""")
 			else:
 				typingPrint(f"\nInput not recognized or not valid right now.\n")
 		else:
