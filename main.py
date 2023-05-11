@@ -46,7 +46,7 @@ class Player():
 				Title()
 				print(f"---===---===---===---===---===---===---===---\n")
 			else:
-				print(f"\nGAME RESUMED. \nReturning to your maybe-not-so epic quest, your progress has been saved! You will renew in the master bedroom.\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.")
+				print(f"\nGAME RESUMED. \nReturning to your maybe-not-so epic quest, your progress has been saved, You will renew in the master bedroom.\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.")
 				Title()
 				print(f"---===---===---===---===---===---===---===---\n")
 		elif ui == "Resume":
@@ -59,7 +59,7 @@ class Player():
 				print(f"---===---===---===---===---===---===---===---\n")
 			else:
 				load()
-				print(f"\nGAME RESUMED. \nReturning to your maybe-not-so epic quest, your progress has been saved! You will renew in the master bedroom.\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.")
+				print(f"\nGAME RESUMED. \nReturning to your maybe-not-so epic quest, your progress has been saved, You will renew in the master bedroom.\n\n\tREMEMBER: You may always access the Menu by inputting 'Menu'.")
 				Title()
 				print(f"---===---===---===---===---===---===---===---\n")
 		else:
@@ -89,7 +89,7 @@ class Menu(Player):
 						load()
 						print(f"\nGame Loaded!")
 					except FileNotFoundError:
-						print(f"\nGame file not found!")
+						print(f"\n'data.pkl' file not found")
 				elif ui == "Return":
 					pass
 				else:
@@ -115,6 +115,7 @@ class Menu(Player):
 class Car():
 #Class for the primary game objective (fixing and leaving through car) and ending the game.
 	def __init__(self):
+		QQASSQS = Iti("Qui quasi anas sonant, sunt qui supersunt.")
 		global CarVar
 		ui = ""
 		if CarObjevInven == []:
@@ -122,7 +123,7 @@ class Car():
 			while ui != "Main":
 				ui = typingInput(f"\n\t/// Do you take the 'main' path or the 'offshoot'? ///\n").title()
 				if ui == "Main":
-					typingPrint(f"\nDriving continuouly down the main path, you are able to leave the home's property a final time.\n\tHopefuly this world has intentions in your favor...\n\n ||| Thanks for playing! Goodbye. |||\n")
+					typingPrint(f"\nDriving continuouly down the main path, you are able to leave the home's property a final time.\n\tHopefuly this world has intentions in your favor...\n\n ||| Thanks for playing, Goodbye. |||\n")
 					typingPrint(f"---===---===---===---===---===---===---===---\n\n")
 					quit()
 				elif ui == "Offshoot":
@@ -131,12 +132,12 @@ class Car():
 						ui = typingInput(f"/// What is the code? ///\n").title()
 						if ui == "76776":
 							typingPrint(f"\nThe metal door loudly opens revealing a single, white LED light.\n\tEntering the small room the door closes behind you and the room shakes downward.\n\t\tThe door opens again revealing an open earth cave.\n")
-							typingPrint(f"\t\t\tNestled in the stalagmites you see a grand vault door and labeled above it a quote:\n\t\t\t\t\"Qui quasi anas sonant, sunt qui supersunt.\"\n")
-							typingPrint(f"||| Thanks for playing! goodbye. |||\n")
+							typingPrint(f"\t\t\tNestled in the stalagmites you see a grand vault door and labeled above it a quote:\n\t\t\t\t\"{QQASSQS}\"\n")
+							typingPrint(f"||| Thanks for playing, goodbye. |||\n")
 							typingPrint(f"---===---===---===---===---===---===---===---\n\n")
 							quit()
 						elif ui == "Exit":
-							typingPrint(f"\nFailing to know the code, you exit the shack and drive down the pathway.\n\tHopefuly this world has intenions in your favor...\n\n\t ||| Thanks for playing! Goodbye. |||\n")
+							typingPrint(f"\nFailing to know the code, you exit the shack and drive down the pathway.\n\tHopefuly this world has intenions in your favor...\n\n\t ||| Thanks for playing, Goodbye. |||\n")
 							typingPrint(f"---===---===---===---===---===---===---===---\n\n")
 							quit()
 						else:
@@ -160,27 +161,27 @@ def speedchange():
 	ui = input(f"\nWhat would you like the gameplay text speed to be?\n1 - Instant\n2 - Fast\n3 - Medium (Default)\n4 - Slow\n5 - Custom Value\n")
 	if ui == "1":
 		TextSpeed = 0
-		print(f"\nDone! Text is now at a speed of {TextSpeed}.")
+		print(f"\nDone, Text is now at a speed of {TextSpeed}.")
 	elif ui == "2":
 		TextSpeed = 0.01575
-		print(f"\nDone! Text is now at a speed of {TextSpeed}.")
+		print(f"\nDone, Text is now at a speed of {TextSpeed}.")
 	elif ui == "3":
 		TextSpeed = 0.0315
-		print(f"\nDone! Text is now at a speed of {TextSpeed}.")
+		print(f"\nDone, Text is now at a speed of {TextSpeed}.")
 	elif ui == "4":
 		TextSpeed = 0.063
-		print(f"\nDone! Text is now at a speed of {TextSpeed}.")
+		print(f"\nDone, Text is now at a speed of {TextSpeed}.")
 	elif ui == "5":
 		ui = ""
 		try:
-			ui = float(input(f"\nEnter custom text speed value.\n\tValue MUST be positive and less than 1, otherwise they would be {very} slow.\n"))
+			ui = float(input(f"\nEnter custom text speed value.\n\tValue MUST be positive and less than 1, otherwise the text would be {very} slow.\n"))
 			if ui < 0:
 				print(f"\nNegative numbers are not valid.")
 			elif ui > 1:
 				print(f"\nNumbers above 1 are not accepted.")
 			else:
 				TextSpeed = ui
-				print(f"\nDone! Text is now at a speed of {TextSpeed}.")
+				print(f"\nDone, Text is now at a speed of {TextSpeed}.")
 		except ValueError:
 			print(f"\nInput was not a number.")
 	else:
@@ -648,7 +649,7 @@ def Cellar():
 					FanShellVar = 1
 					if "Fan Blades" in inventory:
 						typingPrint(f"Using your fan blades you pulled from the kids' room, you are able to make a portable cooler.\n")
-						typingPrint(f"\n+ Cooler\n\n")
+						typingPrint(f"\n+ Cooler\n")
 						inventory.append(f"Cooler")
 						inventory.remove(f"Fan Blades")
 						inventory.remove(f"Fan Shell")
@@ -805,7 +806,8 @@ def FrontyardWest():
 						CarObjevInven.remove(f"Hose")
 						HoseVar = 1
 					else:
-						typingPrint(f"\nLooking at the hose you realize that it's chained to the wall, locked by a padlock.\n\tYou need some way of opening the lock.\n")
+						typingPrint(f"\nLooking at the hose you realize that it's chained to the wall, locked by a padlock.\n")
+						typingPrint(f"\tYou need some way of opening the loack.\n")
 				else:
 					typingPrint(f"\nSince you've already interacted with the hose, you can't again.\n")
 			else:
